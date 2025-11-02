@@ -3,7 +3,6 @@ package com.fixit.service;
 import com.fixit.dto.UserProfileDTO;
 import com.fixit.entity.User;
 import com.fixit.exception.ResourceNotFoundException;
-import com.fixit.entity.User;
 import com.fixit.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +17,6 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // Constructor injection: Spring will autowire these automatically
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
