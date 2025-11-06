@@ -28,6 +28,10 @@ public class ServiceProvider {
 
     private Double ratingAvg = 0.0;
 
+
+    @Enumerated(EnumType.STRING)
+    private VerificationStatus status = VerificationStatus.PENDING_APPROVAL;
+
     @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
