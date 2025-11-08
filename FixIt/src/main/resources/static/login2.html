@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixIT - Login & Register</title>
+    <link rel="stylesheet" href="styles2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="top-controls">
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            <select class="language-select" id="languageSelect">
+                <option value="en">English</option>
+                <option value="si">සිංහල</option>
+            </select>
+        </div>
+
+        <!-- Background Animation -->
+        <div class="background-animation">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+        </div>
+
+        <!-- Main Card -->
+        <div class="card-container">
+            <!-- Logo Section -->
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-tools"></i>
+                    <h1>FixIT</h1>
+                </div>
+                <p class="tagline" data-i18n="tagline">Your Trusted Home Service Partner</p>
+            </div>
+
+            <!-- Login Form -->
+            <div class="form-container active" id="loginForm">
+                <h2 data-i18n="login-title">Welcome Back</h2>
+                <p class="form-subtitle" data-i18n="login-subtitle">Login to book your home services</p>
+
+                <!-- User Type Selection -->
+                <div class="user-type-selector">
+                    <label class="user-type-option">
+                        <input type="radio" name="login-user-type" value="customer" checked>
+                        <div class="user-type-card">
+                            <i class="fas fa-user"></i>
+                            <span data-i18n="customer">Customer</span>
+                        </div>
+                    </label>
+                    <label class="user-type-option">
+                        <input type="radio" name="login-user-type" value="provider">
+                        <div class="user-type-card">
+                            <i class="fas fa-user-tie"></i>
+                            <span data-i18n="service-provider">Service Provider</span>
+                        </div>
+                    </label>
+                    <label class="user-type-option">
+                        <input type="radio" name="login-user-type" value="admin">
+                        <div class="user-type-card">
+                            <i class="fas fa-user-shield"></i>
+                            <span data-i18n="admin">Admin</span>
+                        </div>
+                    </label>
+                </div>
+
+                <form id="login-form" novalidate>
+                    <div class="input-group">
+                        <label for="login-email" data-i18n="email-label">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input 
+                                type="email" 
+                                id="login-email" 
+                                name="email" 
+                                data-i18n-placeholder="email-placeholder"
+                                placeholder="Enter your email"
+                                required
+                            >
+                        </div>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="login-password" data-i18n="password-label">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input 
+                                type="password" 
+                                id="login-password" 
+                                name="password" 
+                                data-i18n-placeholder="password-placeholder"
+                                placeholder="Enter your password"
+                                required
+                            >
+                            <i class="fas fa-eye toggle-password" data-target="login-password"></i>
+                        </div>
+                        <span class="error-message"></span>
+                        <span class="caps-lock-warning" data-i18n="caps-lock-warning">⚠️ Caps Lock is ON</span>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember-me">
+                            <span data-i18n="remember-me">Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-password" data-i18n="forgot-password">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <span data-i18n="login-button">Login</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <div class="divider">
+                        <span data-i18n="or">OR</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button type="button" class="btn-social btn-google">
+                            <i class="fab fa-google"></i>
+                            <span data-i18n="continue-google">Continue with Google</span>
+                        </button>
+                        <button type="button" class="btn-social btn-facebook">
+                            <i class="fab fa-facebook-f"></i>
+                            <span data-i18n="continue-facebook">Continue with Facebook</span>
+                        </button>
+                    </div>
+
+                    <p class="switch-form">
+                        <span data-i18n="no-account">Don't have an account?</span>
+                        <a href="#" id="showRegister" data-i18n="register-now">Register now</a>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Register Form -->
+            <div class="form-container" id="registerForm">
+                <h2 data-i18n="register-title">Create Account</h2>
+                <p class="form-subtitle" data-i18n="register-subtitle">Join FixIT to book trusted professionals</p>
+
+                <!-- User Type Selection -->
+                <div class="user-type-selector">
+                    <label class="user-type-option">
+                        <input type="radio" name="register-user-type" value="customer" checked>
+                        <div class="user-type-card">
+                            <i class="fas fa-user"></i>
+                            <span data-i18n="customer">Customer</span>
+                        </div>
+                    </label>
+                    <label class="user-type-option">
+                        <input type="radio" name="register-user-type" value="provider">
+                        <div class="user-type-card">
+                            <i class="fas fa-user-tie"></i>
+                            <span data-i18n="service-provider">Service Provider</span>
+                        </div>
+                    </label>
+                </div>
+
+                <form id="register-form" novalidate>
+                    <div class="input-group">
+                        <label for="register-name" data-i18n="name-label">Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user"></i>
+                            <input 
+                                type="text" 
+                                id="register-name" 
+                                name="name" 
+                                data-i18n-placeholder="name-placeholder"
+                                placeholder="Enter your full name"
+                                required
+                                minlength="3"
+                            >
+                            <i class="fas fa-check-circle validation-icon"></i>
+                        </div>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="register-email" data-i18n="email-label">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input 
+                                type="email" 
+                                id="register-email" 
+                                name="email" 
+                                data-i18n-placeholder="email-placeholder"
+                                placeholder="Enter your email"
+                                required
+                            >
+                            <i class="fas fa-check-circle validation-icon"></i>
+                        </div>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="register-phone" data-i18n="phone-label">Phone Number</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-phone"></i>
+                            <input 
+                                type="tel" 
+                                id="register-phone" 
+                                name="phone" 
+                                data-i18n-placeholder="phone-placeholder"
+                                placeholder="Enter your phone number"
+                                required
+                                pattern="[0-9]{10}"
+                            >
+                            <i class="fas fa-check-circle validation-icon"></i>
+                        </div>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="register-password" data-i18n="password-label">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input 
+                                type="password" 
+                                id="register-password" 
+                                name="password" 
+                                data-i18n-placeholder="create-password-placeholder"
+                                placeholder="Create a strong password"
+                                required
+                                minlength="8"
+                            >
+                            <i class="fas fa-eye toggle-password" data-target="register-password"></i>
+                        </div>
+                        <span class="error-message"></span>
+                        <span class="caps-lock-warning" data-i18n="caps-lock-warning">⚠️ Caps Lock is ON</span>
+                        
+                        <div class="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill"></div>
+                            </div>
+                            <span class="strength-text" data-i18n="password-strength">Password strength</span>
+                        </div>
+
+                        <ul class="password-requirements">
+                            <li id="req-length">
+                                <i class="fas fa-times"></i>
+                                <span data-i18n="req-length">At least 8 characters</span>
+                            </li>
+                            <li id="req-uppercase">
+                                <i class="fas fa-times"></i>
+                                <span data-i18n="req-uppercase">One uppercase letter</span>
+                            </li>
+                            <li id="req-lowercase">
+                                <i class="fas fa-times"></i>
+                                <span data-i18n="req-lowercase">One lowercase letter</span>
+                            </li>
+                            <li id="req-number">
+                                <i class="fas fa-times"></i>
+                                <span data-i18n="req-number">One number</span>
+                            </li>
+                            <li id="req-special">
+                                <i class="fas fa-times"></i>
+                                <span data-i18n="req-special">One special character</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="register-confirm-password" data-i18n="confirm-password-label">Confirm Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input 
+                                type="password" 
+                                id="register-confirm-password" 
+                                name="confirm-password" 
+                                data-i18n-placeholder="confirm-password-placeholder"
+                                placeholder="Re-enter your password"
+                                required
+                            >
+                            <i class="fas fa-eye toggle-password" data-target="register-confirm-password"></i>
+                        </div>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="remember-me">
+                            <input type="checkbox" id="terms" required>
+                            <span data-i18n="terms-agree">I agree to the <a href="#">Terms & Conditions</a></span>
+                        </label>
+                        <span class="error-message"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <span data-i18n="create-account-button">Create Account</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <div class="divider">
+                        <span data-i18n="or">OR</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button type="button" class="btn-social btn-google">
+                            <i class="fab fa-google"></i>
+                            <span data-i18n="signup-google">Sign up with Google</span>
+                        </button>
+                        <button type="button" class="btn-social btn-facebook">
+                            <i class="fab fa-facebook-f"></i>
+                            <span data-i18n="signup-facebook">Sign up with Facebook</span>
+                        </button>
+                    </div>
+
+                    <p class="switch-form">
+                        <span data-i18n="have-account">Already have an account?</span>
+                        <a href="#" id="showLogin" data-i18n="login-here">Login here</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-message" id="successMessage">
+            <div class="success-content">
+                <i class="fas fa-check-circle"></i>
+                <h3 data-i18n="success">Success!</h3>
+                <p id="successText"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="translations.js"></script>
+    <script src="api-config.js"></script>
+    <script src="script2.js"></script>
+</body>
+</html>
