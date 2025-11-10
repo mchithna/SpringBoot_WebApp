@@ -21,4 +21,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     // NEW: Find reviews by status for Admin Moderation
     List<Review> findByStatus(ReviewStatus status);
+
 }
