@@ -1,16 +1,21 @@
 package com.fixit.controller;
 
 
-import com.fixit.dto.AdminBookingDTO;
 import com.fixit.dto.AdminDashboardStatsDTO;
 import com.fixit.dto.AdminProviderViewDTO;
 import com.fixit.dto.AdminUserViewDTO;
-import com.fixit.entity.*;
-import com.fixit.security.JwtUtil;
+import com.fixit.dto.AdminBookingDTO;
+import com.fixit.entity.Booking;
 import com.fixit.service.AdminService;
+import com.fixit.entity.Role;
+import com.fixit.entity.ServiceProvider;
+import com.fixit.entity.User;
+import com.fixit.entity.VerificationStatus;
+import com.fixit.security.JwtUtil;
 import com.fixit.service.BookingService;
 import com.fixit.service.ServiceProviderService;
 import com.fixit.service.UserService;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +27,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -151,8 +157,7 @@ public class AdminController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Booking> bookingPage = bookingService.findAll(pageable);
-        Page<AdminBookingDTO> bookingDTOPage = bookingPage.map(AdminBookingDTO::new);
+        Page<AdminBookingDTO> bookingDTOPage = bookingService.findAllAsAdminDTO(pageable);
         return ResponseEntity.ok(bookingDTOPage);
     }
 }

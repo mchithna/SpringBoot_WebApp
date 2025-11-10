@@ -14,12 +14,15 @@ public class EmailService {
         this.mailSender = mailSender;
     }
 
+    /**
+     * Sends the "Contact Us" form submission to the admin.
+     */
     public void sendContactForm(ContactDTO contactDTO) {
         // Email to be sent TO the admin
         SimpleMailMessage adminMessage = new SimpleMailMessage();
-        adminMessage.setTo("admin@fixit.com");
+        adminMessage.setTo("admin@fixit.com"); // Your admin email
         adminMessage.setSubject("New Contact Form Submission from: " + contactDTO.getName());
-        adminMessage.setFrom(contactDTO.getEmail());
+        adminMessage.setFrom(contactDTO.getEmail()); // Reply-to
         adminMessage.setText(
                 "You have a new contact form submission:\n" +
                         "Name: " + contactDTO.getName() + "\n" +
@@ -28,7 +31,7 @@ public class EmailService {
                         "Message:\n" + contactDTO.getMessage()
         );
 
-        // Confirmation email to the user
+        // (Optional) Confirmation email to the user
         SimpleMailMessage userMessage = new SimpleMailMessage();
         userMessage.setTo(contactDTO.getEmail());
         userMessage.setSubject("We've received your message - FixIt");
@@ -42,8 +45,10 @@ public class EmailService {
             mailSender.send(adminMessage);
             mailSender.send(userMessage);
         } catch (Exception e) {
+            // Log the error, but don't fail the request
             System.err.println("Error sending contact email: " + e.getMessage());
         }
     }
 
+    // You can add other email methods here (e.g., sendBookingConfirmation)
 }

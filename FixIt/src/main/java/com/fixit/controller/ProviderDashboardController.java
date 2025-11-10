@@ -1,5 +1,6 @@
 package com.fixit.controller;
 
+import com.fixit.dto.ProviderBookingDTO;
 import com.fixit.dto.ProviderDTO;
 import com.fixit.dto.ProviderDashboardDTO;
 import com.fixit.entity.*;
@@ -12,6 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,13 +49,18 @@ public class ProviderDashboardController {
 
     @GetMapping("/profile")
     public ResponseEntity<ProviderDashboardDTO> getMyProfile(Authentication authentication) {
-        ServiceProvider provider = getProviderFromAuth(authentication);
-        // Convert to DTO before returning
-        return ResponseEntity.ok(new ProviderDashboardDTO(provider));
+        // 1. Get the authenticated user
+        User user = userService.findByEmail(authentication.getName());
+
+        ProviderDashboardDTO dto = providerService.getDashboardDTO(user);
+
+        // 3. Return the DTO
+        return ResponseEntity.ok(dto);
     }
     //PUT /api/providers/dashboard/profile
 
     @PutMapping("/profile")
+    @Transactional
     public ResponseEntity<ProviderDashboardDTO> updateMyProfile(@Valid @RequestBody ProviderDTO dto, Authentication authentication) {
         ServiceProvider provider = getProviderFromAuth(authentication);
 
@@ -74,6 +81,7 @@ public class ProviderDashboardController {
 
     // To update the provider's service categories
     @PutMapping("/categories")
+    @Transactional
     public ResponseEntity<?> updateProviderCategories(@RequestBody List<Long> categoryIds, Authentication authentication) {
         ServiceProvider provider = getProviderFromAuth(authentication);
 
@@ -86,8 +94,6 @@ public class ProviderDashboardController {
         // Set the new categories on the provider
         provider.setServiceCategories(categories);
         providerService.save(provider);
-        userService.save(provider.getUser());
-
 
         return ResponseEntity.ok(Map.of("message", "Service categories updated successfully"));
     }
@@ -95,11 +101,22 @@ public class ProviderDashboardController {
      // GET /api/providers/dashboard/bookings
 
     @GetMapping("/bookings")
-    public ResponseEntity<List<Booking>> getMyBookings(Authentication authentication) {
-        ServiceProvider provider = getProviderFromAuth(authentication);
-        return ResponseEntity.ok(bookingService.findByProviderId(provider.getId()));
-    }
+    public ResponseEntity<List<ProviderBookingDTO>> getMyBookings(
+            Authentication authentication,
+            @RequestParam(required = false) String status) { // <-- ADDED PARAM
 
+        ServiceProvider provider = getProviderFromAuth(authentication);
+
+        // Use the new service method
+        List<Booking> bookings = bookingService.findByProviderIdAndStatus(provider.getId(), status);
+
+        // Convert to DTOs to prevent JSON loop
+        List<ProviderBookingDTO> dtos = bookings.stream()
+                .map(ProviderBookingDTO::new)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(dtos);
+    }
     // POST /api/providers/dashboard/bookings/{id}/accept
 
     @PostMapping("/bookings/{id}/accept")

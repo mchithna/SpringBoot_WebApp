@@ -5,6 +5,7 @@ let currentProviderTab = 'all';
 let currentUserPage = 0;
 let currentBookingPage = 0; // NEW
 let allAdminBookings = [];
+let allCategoryStats = null;
 
 // INITIALIZATION
 
@@ -146,6 +147,11 @@ async function loadDashboardStats() {
         document.getElementById('nav-badge-users').textContent = stats.totalUsers;
         document.getElementById('nav-badge-providers').textContent = stats.totalProviders;
         document.getElementById('nav-badge-bookings').textContent = stats.totalBookings;
+
+        allCategoryStats = {
+            bookingStats: stats.bookingStats || [],
+            serviceStats: stats.serviceStats || []
+        };
         // 2. Populate the charts (logic moved from loadDashboardCharts)
         if (stats.bookingStats) {
             renderBookingChart(stats.bookingStats);
@@ -154,6 +160,10 @@ async function loadDashboardStats() {
         if (stats.serviceStats) {
             renderServiceOverview(stats.serviceStats);
         }
+        if (document.getElementById('services-section').classList.contains('active')) {
+            loadServiceCategories();
+        }
+
 
     } catch (error) {
         console.error('Failed to load dashboard stats:', error);
@@ -352,12 +362,14 @@ function initializeNavigation() {
                 // Load first page of users
                 currentUserPage = 0;
                 loadUsers(currentUserPage);
-            } else if (targetSectionId === 'bookings') { // NEW
+            } else if (targetSectionId === 'bookings') {
                 // Load first page of bookings
                 currentBookingPage = 0;
                 loadAdminBookings(currentBookingPage);
+            } else if (targetSectionId === 'services') {
+                // Load service categories
+                loadServiceCategories();
             }
-
 
             // Close mobile menu if open
             const sidebar = document.getElementById('sidebar');
@@ -690,6 +702,98 @@ async function handleDeleteUser(event, userId) {
             btn.disabled = false;
         }
     }
+}
+
+/* ==========================================
+   NEW: SERVICE CATEGORY MANAGEMENT
+   ========================================== */
+
+
+function loadServiceCategories() {
+    const grid = document.getElementById('service-categories-grid');
+    if (!grid) return;
+
+    if (!allCategoryStats || !allCategoryStats.bookingStats) {
+        grid.innerHTML = '<p data-i18n="loading-stats">Loading stats... Please wait.</p>';
+        // If stats aren't loaded, try loading them again and re-call this function
+        if (!allCategoryStats) {
+            loadDashboardStats().then(loadServiceCategories);
+        }
+        updateAdminLanguage(localStorage.getItem('language') || 'en');
+        return;
+    }
+
+    renderServiceCategories(allCategoryStats);
+}
+
+
+function renderServiceCategories(statsData) {
+    const grid = document.getElementById('service-categories-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    // Create a map of service counts for easy lookup
+    const serviceCountMap = new Map(statsData.serviceStats.map(s => [s.categoryName, s.count]));
+    const bookingStats = statsData.bookingStats || [];
+
+    if (bookingStats.length === 0) {
+        grid.innerHTML = '<p data-i18n="no-categories-found">No service categories found.</p>';
+        updateAdminLanguage(localStorage.getItem('language') || 'en');
+        return;
+    }
+
+    // Loop through bookingStats (which represents all categories)
+    bookingStats.forEach(category => {
+        const categoryName = category.categoryName;
+        const bookingCount = category.count;
+        const serviceCount = serviceCountMap.get(categoryName) || 0; // Get corresponding service count
+
+        const cardHtml = createCategoryCardHtml(categoryName, bookingCount, serviceCount);
+        grid.insertAdjacentHTML('beforeend', cardHtml);
+    });
+
+    // Apply translations to the new cards
+    updateAdminLanguage(localStorage.getItem('language') || 'en');
+}
+
+
+function getCategoryIcon(categoryName) {
+    const name = categoryName.toLowerCase();
+    if (name.includes('electric')) return 'fa-bolt';
+    if (name.includes('plumb')) return 'fa-wrench';
+    if (name.includes('clean')) return 'fa-broom';
+    if (name.includes('paint')) return 'fa-paint-roller';
+    if (name.includes('carpen')) return 'fa-hammer';
+    if (name.includes('garden')) return 'fa-leaf';
+    if (name.includes('appliance')) return 'fa-blender-phone';
+    if (name.includes('auto')) return 'fa-car';
+    return 'fa-tools'; // Default
+}
+
+function createCategoryCardHtml(categoryName, bookingCount, serviceCount) {
+    const iconClass = getCategoryIcon(categoryName);
+
+    // Using 'service-card-admin' but adding 'category-card' for new styles
+    return `
+    <div class="service-card-admin category-card">
+        <div class="service-icon-large blue">
+            <i class="fas ${iconClass}"></i>
+        </div>
+        <h3>${categoryName}</h3>
+        
+        <div class="service-stats-admin">
+            <div class="stat">
+                <span data-i18n="bookings">Bookings</span>
+                <strong>${bookingCount}</strong>
+            </div>
+            <div class="stat">
+                <span data-i18n="services">Services</span>
+                <strong>${serviceCount}</strong>
+            </div>
+        </div>
+        <button class="btn-edit" data-i18n="manage">Manage</button>
+    </div>
+    `;
 }
 
 /* ==========================================

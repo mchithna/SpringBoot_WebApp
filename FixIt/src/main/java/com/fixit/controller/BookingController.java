@@ -1,6 +1,8 @@
 package com.fixit.controller;
 
 import com.fixit.dto.BookingDTO;
+import com.fixit.dto.BookingCardDTO;
+
 import com.fixit.entity.Booking;
 import com.fixit.entity.User;
 import com.fixit.service.BookingService;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -43,27 +47,25 @@ public class BookingController {
         }
     }
 
+    // accepts an optional 'status' parameter to filter bookings.
     @GetMapping
-    public ResponseEntity<List<Booking>> list(Authentication authentication) {
+    public ResponseEntity<List<BookingCardDTO>> list(
+            Authentication authentication,
+            @RequestParam(required = false) String status) { // <-- Parameter is here
         String email = authentication.getName();
         User user = userService.findByEmail(email);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
-        List<Booking> bookings = service.findByUser(user);
-        return ResponseEntity.ok(bookings);
-    }
+        // Use the service method that fetches entities
+        List<Booking> bookings = service.findByUser(user, status);
 
-    @GetMapping("/upcoming")
-    public ResponseEntity<List<Booking>> upcoming(Authentication authentication) {
-        String email = authentication.getName();
-        User user = userService.findByEmail(email);
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
-        List<Booking> upcoming = service.findUpcomingByUser(user);
-        return ResponseEntity.ok(upcoming);
-    }
+        // Convert the list of entities to a list of DTOs
+        List<BookingCardDTO> bookingDTOs = bookings.stream()
+                .map(BookingCardDTO::new) // Uses the constructor of BookingCardDTO
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(bookingDTOs);    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Booking> getById(@PathVariable Long id, Authentication authentication) {

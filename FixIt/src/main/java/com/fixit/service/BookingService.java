@@ -1,6 +1,6 @@
 package com.fixit.service;
 
-// ... (imports)
+import com.fixit.dto.AdminBookingDTO;
 import com.fixit.dto.BookingDTO;
 import com.fixit.entity.Booking;
 import com.fixit.entity.BookingStatus;
@@ -8,26 +8,33 @@ import com.fixit.entity.ServiceProvider;
 import com.fixit.entity.User;
 import com.fixit.repository.BookingRepository;
 import com.fixit.repository.ServiceProviderRepository;
+import com.fixit.repository.ServiceRepository;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-// ...
+
 
 @Service
 public class BookingService {
     private final BookingRepository bookingRepository;
     private final ServiceProviderRepository providerRepository;
+    private final ServiceRepository serviceRepository;
+
     private final JavaMailSender mailSender;
 
     public BookingService(BookingRepository bookingRepository,
                           ServiceProviderRepository providerRepository,
+                          ServiceRepository serviceRepository,
                           JavaMailSender mailSender) {
         this.bookingRepository = bookingRepository;
         this.providerRepository = providerRepository;
+        this.serviceRepository = serviceRepository;
         this.mailSender = mailSender;
     }
 
@@ -37,13 +44,18 @@ public class BookingService {
     }
 
     public Booking save(BookingDTO dto, User user) {
-        ServiceProvider provider = providerRepository.findById(dto.getProviderId()).orElse(null);
+        com.fixit.entity.Service service = serviceRepository.findById(dto.getServiceId())
+                .orElseThrow(() -> new IllegalArgumentException("Service not found: " + dto.getServiceId()));
+
+        // Get the provider from the service
+        ServiceProvider provider = service.getProvider();
         if (provider == null) {
             throw new IllegalArgumentException("Provider not found: " + dto.getProviderId());
         }
         Booking booking = new Booking();
         booking.setUser(user);
         booking.setProvider(provider);
+        booking.setService(service);
         booking.setDateTime(dto.getDateTime());
         booking.setRemarks(dto.getRemarks());
         booking.setStatus(BookingStatus.PENDING);
@@ -57,6 +69,11 @@ public class BookingService {
         return bookingRepository.findAll(pageable);
     }
 
+    @Transactional(readOnly = true)
+    public Page<AdminBookingDTO> findAllAsAdminDTO(Pageable pageable) {
+        Page<Booking> bookingPage = bookingRepository.findAll(pageable);
+        return bookingPage.map(AdminBookingDTO::new);
+    }
 
     public List<Booking> findByUser(User user) {
         if (user == null || user.getId() == null) {
@@ -65,11 +82,26 @@ public class BookingService {
         return bookingRepository.findByUserId(user.getId());
     }
 
-    public List<Booking> findUpcomingByUser(User user) {
+    // Fetches bookings for a user, optionally filtering by status.
+
+    public List<Booking> findByUser(User user, String statusStr) {
         if (user == null || user.getId() == null) {
             return List.of();
         }
-        return bookingRepository.findByUserIdAndStatusAndDateTimeAfter(user.getId(), BookingStatus.PENDING, LocalDateTime.now());
+
+        if (statusStr == null || statusStr.isEmpty() || statusStr.equalsIgnoreCase("all")) {
+            // No status or "all" - return all bookings for the user
+            return bookingRepository.findByUserId(user.getId());
+        } else {
+            // A specific status is requested
+            try {
+                BookingStatus status = BookingStatus.valueOf(statusStr.toUpperCase());
+                return bookingRepository.findByUserIdAndStatus(user.getId(), status);
+            } catch (IllegalArgumentException e) {
+                // Handle invalid status string
+                return List.of();
+            }
+        }
     }
 
     public Booking findById(Long id) {
@@ -104,12 +136,28 @@ public class BookingService {
     private void sendStatusUpdateEmail(Booking booking) {
     }
 
-    // NEW: Get total booking count for dashboard stats.
+    // Get total booking count for dashboard stats.
 
     public long getBookingCount() {
         return bookingRepository.count();
     }
     public List<Booking> findByProviderId(Long providerId) {
         return bookingRepository.findByProviderId(providerId);
+    }
+
+    public List<Booking> findByProviderIdAndStatus(Long providerId, String statusStr) {
+        if (statusStr == null || statusStr.isEmpty() || statusStr.equalsIgnoreCase("all")) {
+            // No status or "all" - return all bookings for the provider
+            return bookingRepository.findByProviderId(providerId);
+        } else {
+            // A specific status is requested
+            try {
+                BookingStatus status = BookingStatus.valueOf(statusStr.toUpperCase());
+                return bookingRepository.findByProviderIdAndStatus(providerId, status);
+            } catch (IllegalArgumentException e) {
+                // Handle invalid status string
+                return List.of();
+            }
+        }
     }
 }

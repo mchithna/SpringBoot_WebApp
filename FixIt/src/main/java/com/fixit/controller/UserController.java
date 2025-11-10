@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -23,12 +24,19 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<User> getMyProfile(Authentication authentication) {
+    public ResponseEntity<UserProfileDTO> getMyProfile(Authentication authentication) {
         if (authentication == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         User user = userService.findByEmail(authentication.getName());
-        return ResponseEntity.ok(user);
+
+        UserProfileDTO dto = new UserProfileDTO();
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
+        dto.setPhone(user.getContactNo());
+        dto.setAddress(user.getAddress());
+
+        return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/profile")

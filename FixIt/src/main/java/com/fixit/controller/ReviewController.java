@@ -1,11 +1,13 @@
 package com.fixit.controller;
 
 import com.fixit.dto.ReviewDTO;
+import com.fixit.dto.UserReviewDTO;
 import com.fixit.entity.Review;
 import com.fixit.entity.User;
 import com.fixit.service.ReviewService;
 import com.fixit.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -47,13 +49,14 @@ public class ReviewController {
 
     // READ ALL for user: GET /api/reviews (requires auth)
     @GetMapping
-    public ResponseEntity<List<Review>> list(Authentication authentication) {
+    public ResponseEntity<List<UserReviewDTO>> list(Authentication authentication) {
         String email = authentication.getName();
         User user = userService.findByEmail(email);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
-        List<Review> reviews = service.findByUser(user);  // FIXED: Uses wrapper
+        // Use the new service method
+        List<UserReviewDTO> reviews = service.getReviewsForUser(user);
         return ResponseEntity.ok(reviews);
     }
 

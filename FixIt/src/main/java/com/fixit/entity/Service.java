@@ -6,8 +6,10 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
 import java.math.BigDecimal;
+
+import java.util.Set;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "services")
@@ -28,8 +30,8 @@ public class Service {
     // The provider who offers this specific service
     @ManyToOne
     @JoinColumn(name = "provider_id")
-    @ToString.Exclude // <-- ADD
-    @EqualsAndHashCode.Exclude // <-- ADD
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private ServiceProvider provider;
 
     // The category this service belongs to
@@ -38,4 +40,7 @@ public class Service {
     @ToString.Exclude // <-- ADD
     @EqualsAndHashCode.Exclude // <-- ADD
     private ServiceCategory serviceCategory;
+
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Favorite> favoritedBy = new HashSet<>();
 }

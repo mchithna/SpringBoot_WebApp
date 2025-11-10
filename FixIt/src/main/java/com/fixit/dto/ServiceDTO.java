@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class ServiceDTO {
 
     @NotBlank
-    private String name; 
+    private String name;
 
     private String description;
 
