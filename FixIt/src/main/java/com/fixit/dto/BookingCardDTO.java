@@ -58,8 +58,8 @@ public class BookingCardDTO {
                 this.serviceCategoryIcon = booking.getService().getServiceCategory().getIcon();
             }
         } else {
-
-            this.serviceName = this.remarks;
+            //for old bookings that might not have a service linked
+            this.serviceName = this.remarks; // Use remarks as service name
         }
     }
 }

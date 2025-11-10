@@ -20,7 +20,7 @@ public class ProviderBookingDTO {
     private BigDecimal servicePrice;
     private UserInfoDTO user; // Nested DTO for customer info
 
-    // Inner DTO for just the user data we need
+
     @Data
     public static class UserInfoDTO {
         private Long id;

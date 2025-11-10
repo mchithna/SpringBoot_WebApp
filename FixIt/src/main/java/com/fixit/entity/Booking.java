@@ -2,7 +2,8 @@ package com.fixit.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,11 +16,21 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "provider_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private ServiceProvider provider;
+
+    @ManyToOne
+    @JoinColumn(name = "service_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Service service;
 
     @Enumerated(EnumType.STRING)
     private BookingStatus status = BookingStatus.PENDING;

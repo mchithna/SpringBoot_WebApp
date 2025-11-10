@@ -5,7 +5,9 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-
+/**
+ * DTO for displaying a user's own reviews in their dashboard.
+ */
 @Data
 public class UserReviewDTO {
 

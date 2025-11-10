@@ -21,9 +21,14 @@ public class ContactController {
         this.emailService = emailService;
     }
 
+    /**
+     * PUBLIC Endpoint: POST /api/contact
+     * Handles the "Contact Us" form submission from index.html
+     */
     @PostMapping
     public ResponseEntity<?> submitContactForm(@Valid @RequestBody ContactDTO contactDTO) {
         try {
+            // The email service will send the email asynchronously
             emailService.sendContactForm(contactDTO);
 
             // Return an immediate success response to the user

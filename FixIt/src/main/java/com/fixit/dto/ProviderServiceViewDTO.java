@@ -3,7 +3,6 @@ package com.fixit.dto;
 import com.fixit.entity.Service;
 import com.fixit.entity.ServiceCategory;
 import lombok.Data;
-
 import java.math.BigDecimal;
 
 // provider's services on their dashboard.

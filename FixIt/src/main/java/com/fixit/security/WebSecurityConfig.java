@@ -4,39 +4,33 @@ import com.fixit.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import java.util.List;
 
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
-    private final UserService userService;
+
     private final JwtRequestFilter jwtRequestFilter;
 
     public WebSecurityConfig(@Lazy UserService userService, JwtRequestFilter jwtRequestFilter) {
-        this.userService = userService;
         this.jwtRequestFilter = jwtRequestFilter;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
     }
 
     @Bean
@@ -47,36 +41,46 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // For simplicity. Enable with proper token handling in production.
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authz -> authz
-                        // Permit access to static resources and specific pages
-                        .requestMatchers("/", "/index.html", "/login.html", "/register.html", "/css/**", "/js/**", "/images/**").permitAll()
-                        // API endpoints for auth are public
-                        .requestMatchers("/api/auth/**").permitAll()
-                        // Any other request must be authenticated
+                        // --- MODIFIED: Added permissions for root static files ---
+                        .requestMatchers(
+                                "/", "/*.html", "/*.js", "/*.css", "/*.ico", // Allow root files
+                                "/static/**", // Allow files in /static/ (for dashboards)
+                                "/uploads/**" // Allow image uploads
+                        ).permitAll()
+
+                        // --- Public API Endpoints ---
+                        .requestMatchers("/api/auth/register", "/api/providers/register").permitAll()
+                        .requestMatchers("/api/auth/login", "/api/admin/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/providers/**", "/api/reviews/provider/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/services/categories").permitAll()
+                        .requestMatchers("/api/contact").permitAll()
+
+                        // --- Secured Endpoints (by Role) ---
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/providers/dashboard/**", "/api/providers/services/**").hasRole("PROVIDER")
+                        .requestMatchers("/api/users/**", "/api/bookings/**", "/api/reviews/**", "/api/favorites/**").hasRole("CUSTOMER")
+
                         .anyRequest().authenticated()
                 )
-                // Configure form login for the web UI
-                .formLogin(form -> form
-                        .loginPage("/login.html") // Your custom login page
-                        .loginProcessingUrl("/login") // Spring Security's processing URL
-                        .defaultSuccessUrl("/dashboard.html", true) // Redirect here on success
-                        .failureUrl("/login.html?error=true") // Redirect here on failure
-                        .permitAll()
-                )
-                // Configure logout
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login.html?logout=true")
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
-                        .permitAll()
-                );
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        // Add the JWT filter for API calls, but it won't interfere with session-based web auth
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-}
 
+    @Bean
+    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("*"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/api/**", configuration);
+        return source;
+    }
+}

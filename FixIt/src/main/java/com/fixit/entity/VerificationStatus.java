@@ -1,6 +1,6 @@
 package com.fixit.entity;
 
-//status of a Service Provider
+//track the status of a Service Provider
 
 public enum VerificationStatus {
     PENDING_APPROVAL,

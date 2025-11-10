@@ -1,7 +1,10 @@
-//FIXIT HOME PAGE - MAIN JAVASCRIPT
+/* ==========================================
+   FIXIT HOME PAGE - MAIN JAVASCRIPT
+   ========================================== */
 
-   // GLOBAL VARIABLES & INITIALIZATION
-
+/* ==========================================
+   1. GLOBAL VARIABLES & INITIALIZATION
+   ========================================== */
 let currentSlide = 0;
 const navbar = document.getElementById('navbar');
 const hamburger = document.getElementById('hamburger');
@@ -9,8 +12,9 @@ const navMenu = document.getElementById('navMenu');
 const navLinks = document.querySelectorAll('.nav-link');
 const scrollTopBtn = document.getElementById('scrollTop');
 
-//PAGE LOAD INITIALIZATION
-
+/* ==========================================
+   2. PAGE LOAD INITIALIZATION
+   ========================================== */
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize language
     const savedLanguage = localStorage.getItem('language') || 'en';
@@ -45,8 +49,9 @@ window.addEventListener('load', () => {
     document.body.style.opacity = '1';
 });
 
-//THEME TOGGLE FUNCTIONALITY
-
+/* ==========================================
+   3. THEME TOGGLE FUNCTIONALITY
+   ========================================== */
 const themeToggle = document.getElementById('themeToggle');
 if (themeToggle) {
     themeToggle.addEventListener('click', function() {
@@ -63,8 +68,9 @@ if (themeToggle) {
     });
 }
 
-//LANGUAGE SWITCHER
-
+/* ==========================================
+   4. LANGUAGE SWITCHER
+   ========================================== */
 const languageSelect = document.getElementById('languageSelect');
 if (languageSelect) {
     languageSelect.addEventListener('change', (e) => {
@@ -72,7 +78,9 @@ if (languageSelect) {
     });
 }
 
-//NAVIGATION FUNCTIONALITY
+/* ==========================================
+   5. NAVIGATION FUNCTIONALITY
+   ========================================== */
 
 // Navbar scroll effect
 window.addEventListener('scroll', () => {
@@ -141,8 +149,9 @@ scrollTopBtn.addEventListener('click', () => {
     });
 });
 
-//HERO SECTION ANIMATIONS
-
+/* ==========================================
+   6. HERO SECTION ANIMATIONS
+   ========================================== */
 
 // Counter animation
 const counters = document.querySelectorAll('.stat-number');
@@ -190,8 +199,9 @@ if (searchInput && searchBox) {
     });
 }
 
-//INTERSECTION OBSERVER FOR ANIMATIONS
-
+/* ==========================================
+   7. INTERSECTION OBSERVER FOR ANIMATIONS
+   ========================================== */
 function initializeObserver() {
     const observerOptions = {
         threshold: 0.2,
@@ -217,8 +227,9 @@ function initializeObserver() {
     animatedElements.forEach(el => observer.observe(el));
 }
 
-//SERVICE CARDS HOVER EFFECT
-
+/* ==========================================
+   8. SERVICE CARDS HOVER EFFECT
+   ========================================== */
 const serviceCards = document.querySelectorAll('.service-card');
 serviceCards.forEach(card => {
     card.addEventListener('mouseenter', function() {
@@ -230,8 +241,9 @@ serviceCards.forEach(card => {
     });
 });
 
-//TESTIMONIALS SLIDER
-
+/* ==========================================
+   9. TESTIMONIALS SLIDER
+   ========================================== */
 const testimonialCards = document.querySelectorAll('.testimonial-card');
 const dots = document.querySelectorAll('.dot');
 
@@ -258,8 +270,9 @@ dots.forEach((dot, index) => {
     });
 });
 
-//GOOGLE MAPS INTEGRATION
-
+/* ==========================================
+   10. GOOGLE MAPS INTEGRATION
+   ========================================== */
 function loadGoogleMaps() {
     const script = document.createElement('script');
     script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyArvbxR4Hz7jNswrFYrp-kn7ZBx91424FQ&callback=initMap`;
@@ -323,8 +336,9 @@ function initMap() {
     });
 }
 
-//CONTACT FORM SUBMISSION
-
+/* ==========================================
+   11. CONTACT FORM SUBMISSION
+   ========================================== */
 const contactForm = document.getElementById('contactForm');
 
 if (contactForm) {
@@ -384,8 +398,9 @@ if (contactForm) {
     });
 }
 
-//BOOKING BUTTONS FUNCTIONALITY
-
+/* ==========================================
+   12. BOOKING BUTTONS FUNCTIONALITY
+   ========================================== */
 const bookButtons = document.querySelectorAll('.btn-service, .btn-search, .btn-cta');
 bookButtons.forEach(button => {
     button.addEventListener('click', (e) => {
@@ -397,14 +412,17 @@ bookButtons.forEach(button => {
             const message = lang === 'en'
                 ? 'Redirecting to booking page...'
                 : 'වෙන්කරවා ගැනීමේ පිටුවට හරවා යවමින්...';
-
+            
             alert(message);
-            window.location.href = 'login2.html';
+            // Uncomment to redirect to booking page
+            // window.location.href = 'booking.html';
         }
     });
 });
 
-// UTILITY FUNCTIONS
+/* ==========================================
+   13. UTILITY FUNCTIONS
+   ========================================== */
 
 // Check if element is in viewport
 function isInViewport(element) {
@@ -430,8 +448,9 @@ function debounce(func, wait) {
     };
 }
 
-// ERROR HANDLING
-
+/* ==========================================
+   14. ERROR HANDLING
+   ========================================== */
 
 // Global error handler
 window.addEventListener('error', (e) => {
@@ -445,8 +464,9 @@ window.addEventListener('unhandledrejection', (e) => {
     // You can add error reporting here
 });
 
-//CONSOLE WELCOME MESSAGE
-
+/* ==========================================
+   15. CONSOLE WELCOME MESSAGE
+   ========================================== */
 console.log('%cFixIT - Home Service Platform', 'color: #2563eb; font-size: 24px; font-weight: bold;');
 console.log('%cVersion 1.0.0', 'color: #6b7280; font-size: 12px;');
 console.log('%c© 2025 FixIT. All rights reserved.', 'color: #6b7280; font-size: 12px;');

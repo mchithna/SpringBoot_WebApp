@@ -44,11 +44,7 @@
             </a>
             <a href="#services" class="nav-item" data-section="services">
                 <i class="fas fa-wrench"></i>
-                <span data-i18n="services">Services</span>
-            </a>
-            <a href="#revenue" class="nav-item" data-section="revenue">
-                <i class="fas fa-chart-line"></i>
-                <span data-i18n="revenue">Revenue</span>
+                <span data-i18n="service-categories">Service Categories</span>
             </a>
             <a href="#reviews" class="nav-item" data-section="reviews">
                 <i class="fas fa-star"></i>
@@ -371,120 +367,15 @@
         <!-- Services Section -->
         <section class="content-section" id="services-section">
             <div class="page-header">
-                <h1 data-i18n="service-management">Service Management</h1>
-                <button class="btn-primary">
-                    <i class="fas fa-plus"></i>
-                    <span data-i18n="add-service">Add Service</span>
-                </button>
+                <!-- UPDATED: Title changed -->
+                <h1 data-i18n="service-category-management">Service Category Management</h1>
+
             </div>
 
-            <div class="services-grid">
-                <div class="service-card-admin">
-                    <div class="service-icon-large blue">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3 data-i18n="electrical-services">Electrical Services</h3>
-                    <p data-i18n="active-providers">156 active providers</p>
-                    <div class="service-stats-admin">
-                        <div class="stat">
-                            <span data-i18n="bookings">Bookings</span>
-                            <strong>1,245</strong>
-                        </div>
-                        <div class="stat">
-                            <span data-i18n="revenue">Revenue</span>
-                            <strong>$12.5K</strong>
-                        </div>
-                    </div>
-                    <button class="btn-edit" data-i18n="manage">Manage</button>
-                </div>
-
-                <div class="service-card-admin">
-                    <div class="service-icon-large green">
-                        <i class="fas fa-wrench"></i>
-                    </div>
-                    <h3 data-i18n="plumbing-services">Plumbing Services</h3>
-                    <p data-i18n="active-providers">198 active providers</p>
-                    <div class="service-stats-admin">
-                        <div class="stat">
-                            <span data-i18n="bookings">Bookings</span>
-                            <strong>1,876</strong>
-                        </div>
-                        <div class="stat">
-                            <span data-i18n="revenue">Revenue</span>
-                            <strong>$18.3K</strong>
-                        </div>
-                    </div>
-                    <button class="btn-edit" data-i18n="manage">Manage</button>
-                </div>
-
-                <div class="service-card-admin">
-                    <div class="service-icon-large orange">
-                        <i class="fas fa-broom"></i>
-                    </div>
-                    <h3 data-i18n="cleaning-services">Cleaning Services</h3>
-                    <p data-i18n="active-providers">89 active providers</p>
-                    <div class="service-stats-admin">
-                        <div class="stat">
-                            <span data-i18n="bookings">Bookings</span>
-                            <strong>734</strong>
-                        </div>
-                        <div class="stat">
-                            <span data-i18n="revenue">Revenue</span>
-                            <strong>$8.7K</strong>
-                        </div>
-                    </div>
-                    <button class="btn-edit" data-i18n="manage">Manage</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Revenue Section -->
-        <section class="content-section" id="revenue-section">
-            <div class="page-header">
-                <h1 data-i18n="revenue-management">Revenue Management</h1>
-                <button class="btn-primary">
-                    <i class="fas fa-download"></i>
-                    <span data-i18n="download-report">Download Report</span>
-                </button>
-            </div>
-
-            <div class="revenue-overview">
-                <div class="revenue-card-large">
-                    <h3 data-i18n="total-revenue">Total Revenue</h3>
-                    <p class="revenue-amount-large">$45,280</p>
-                    <span class="revenue-period" data-i18n="this-month">This month</span>
-                    <div class="revenue-chart-small">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                </div>
-
-                <div class="revenue-card-large">
-                    <h3 data-i18n="platform-commission">Platform Commission</h3>
-                    <p class="revenue-amount-large">$6,792</p>
-                    <span class="revenue-period">15% <span data-i18n="commission-rate">commission rate</span></span>
-                </div>
-
-                <div class="revenue-card-large">
-                    <h3 data-i18n="pending-payouts">Pending Payouts</h3>
-                    <p class="revenue-amount-large">$12,450</p>
-                    <span class="revenue-period">45 <span data-i18n="providers">providers</span></span>
-                </div>
-            </div>
-
-            <div class="dashboard-card">
-                <div class="card-header">
-                    <h2 data-i18n="revenue-trend">Revenue Trend</h2>
-                    <select class="chart-filter">
-                        <option data-i18n="last-7-days">Last 7 Days</option>
-                        <option data-i18n="last-30-days">Last 30 Days</option>
-                        <option data-i18n="last-6-months">Last 6 Months</option>
-                        <option data-i18n="last-year">Last Year</option>
-                    </select>
-                </div>
-                <div class="chart-placeholder large">
-                    <i class="fas fa-chart-bar"></i>
-                    <p data-i18n="revenue-chart-placeholder">Revenue analytics chart will be displayed here</p>
-                </div>
+            <!-- UPDATED: Grid ID and content cleared -->
+            <div class="services-grid" id="service-categories-grid">
+                <!-- Service Category cards will be populated by admin-dashboard.js -->
+                <p data-i18n="loading-categories">Loading categories...</p>
             </div>
         </section>
 

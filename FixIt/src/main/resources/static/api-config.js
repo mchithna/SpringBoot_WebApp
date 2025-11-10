@@ -9,12 +9,12 @@ const API_CONFIG = {
         REFRESH_TOKEN: '/auth/refresh',
         FORGOT_PASSWORD: '/auth/forgot-password',
         RESET_PASSWORD: '/auth/reset-password',
-        
+
         // User endpoints
         USER_PROFILE: '/users/profile',
         UPDATE_PROFILE: '/users/update',
         CHANGE_PASSWORD: '/users/change-password',
-        
+
         // Service Provider endpoints
         PROVIDER_REGISTER: '/providers/register',
         PROVIDER_PROFILE: '/providers/profile',
@@ -23,14 +23,24 @@ const API_CONFIG = {
         PROVIDER_DASHBOARD_SERVICES: '/providers/services',
         PROVIDER_DASHBOARD_PROFILE: '/providers/dashboard/profile',
         PROVIDER_DASHBOARD_CATEGORIES: '/providers/dashboard/categories',
-        
+        PROVIDER_DASHBOARD_BOOKINGS: '/providers/dashboard/bookings',
+
         // Admin endpoints
         ADMIN_LOGIN: '/admin/login',
         ADMIN_DASHBOARD: '/admin/dashboard',
         ADMIN_USERS: '/admin/users',
+        ADMIN_DELETE_USER: (id) => `/admin/users/${id}`,
         ADMIN_PROVIDERS: '/admin/providers',
+        ADMIN_PROVIDER_APPROVE: (id) => `/admin/providers/${id}/approve`,
+        ADMIN_PROVIDER_SUSPEND: (id) => `/admin/providers/${id}/suspend`,
         ADMIN_STATS: '/admin/dashboard-stats',
+        ADMIN_BOOKINGS: '/admin/bookings',
 
+        // Favorite service endpoints
+        FAVORITES: `/favorites`,
+        FAVORITE_IDS: `/favorites/ids`,
+        ADD_FAVORITE: (serviceId) => `/favorites/${serviceId}`,
+        REMOVE_FAVORITE: (serviceId) => `/favorites/${serviceId}`,
 
         // Service endpoints
         SERVICES: '/services',
@@ -38,7 +48,12 @@ const API_CONFIG = {
         BOOK_SERVICE: '/bookings',
         MY_BOOKINGS: '/bookings',
         // Contact endpoint
-        CONTACT: '/contact'
+        CONTACT: '/contact',
+
+        // Review endpoints (NEW)
+        SUBMIT_REVIEW: '/reviews',
+        MY_REVIEWS: '/reviews',
+        DELETE_REVIEW: (id) => `/reviews/${id}`
     }
 };
 
@@ -83,23 +98,42 @@ class APIService {
 
         try {
             const response = await fetch(url, config);
-            const data = await response.json();
 
-            if (!response.ok) {
-                throw new Error(data.message || 'API request failed');
+            // First, check if the response is OK.
+            if (response.ok) {
+                // Handle no-content responses (like 204)
+                if (response.status === 204) {
+                    return null;
+                }
+                // If OK and has content, parse as JSON.
+                return await response.json();
             }
 
-            return data;
+            // If response is NOT OK, get the error message as text.
+            const errorText = await response.text();
+
+            // Try to parse the text as JSON to get a structured error message.
+            try {
+                const errorData = JSON.parse(errorText);
+                throw new Error(errorData.message || errorData.error || 'API request failed');
+            } catch (jsonError) {
+                // If it wasn't JSON, throw the raw text (which might be "An error occurred...")
+                // We'll clean it up slightly to avoid HTML tags.
+                const cleanError = errorText.replace(/<[^>]*>?/gm, ' ').trim(); // Remove HTML tags
+                throw new Error(cleanError || 'API request failed with non-JSON response');
+            }
+            // --- END OF FIX ---
+
         } catch (error) {
-            console.error('API Error:', error);
-            throw error;
+            console.error('API Error:', error.message); // Log the cleaner error
+            throw error; // Re-throw the error to be caught by the calling function
         }
     }
 
     // Login API call
     async login(email, password, userType) {
-        const endpoint = userType === 'admin' 
-            ? API_CONFIG.ENDPOINTS.ADMIN_LOGIN 
+        const endpoint = userType === 'admin'
+            ? API_CONFIG.ENDPOINTS.ADMIN_LOGIN
             : API_CONFIG.ENDPOINTS.LOGIN;
 
         const response = await this.request(endpoint, {
@@ -222,6 +256,63 @@ class APIService {
             method: 'POST',
             body: JSON.stringify(bookingData)
         });
+    }
+
+    async adminGetProviders(status) {
+        let endpoint = API_CONFIG.ENDPOINTS.ADMIN_PROVIDERS;
+        if (status && status !== 'all') {
+            endpoint += `?status=${status}`;
+        }
+        return await this.request(endpoint, { method: 'GET' });
+    }
+
+    async adminApproveProvider(providerId) {
+        const endpoint = API_CONFIG.ENDPOINTS.ADMIN_PROVIDER_APPROVE(providerId);
+        return await this.request(endpoint, { method: 'POST' });
+    }
+
+    async adminSuspendProvider(providerId) {
+        const endpoint = API_CONFIG.ENDPOINTS.ADMIN_PROVIDER_SUSPEND(providerId);
+        return await this.request(endpoint, { method: 'POST' });
+    }
+
+    //  FAVORITE METHODS
+
+    //Gets a Set of the current user's favorite service IDs.
+    async getFavoriteServiceIds() {
+        const ids = await this.request(API_CONFIG.ENDPOINTS.FAVORITE_IDS, { method: 'GET' });
+        return new Set(ids);
+    }
+
+    //Gets the full ServiceCardDTO objects
+    async getFavoriteServices() {
+        return this.request(API_CONFIG.ENDPOINTS.FAVORITES, { method: 'GET' });
+    }
+
+    // Adds a service to the user's favorites.
+    async addFavorite(serviceId) {
+        return this.request(API_CONFIG.ENDPOINTS.ADD_FAVORITE(serviceId), { method: 'POST' });
+    }
+
+    // Removes a service from the user's favorites.
+    async removeFavorite(serviceId) {
+        return this.request(API_CONFIG.ENDPOINTS.REMOVE_FAVORITE(serviceId), { method: 'DELETE' });
+    }
+
+    // ADMIN USER METHODS
+
+    async adminGetUsers(page = 0, size = 5) {
+        const endpoint = `${API_CONFIG.ENDPOINTS.ADMIN_USERS}?page=${page}&size=${size}`;
+        return await this.request(endpoint, { method: 'GET' });
+    }
+
+    async adminDeleteUser(userId) {
+        const endpoint = API_CONFIG.ENDPOINTS.ADMIN_DELETE_USER(userId);
+        return await this.request(endpoint, { method: 'DELETE' });
+    }
+    async adminGetBookings(page = 0, size = 10) {
+        const endpoint = `${API_CONFIG.ENDPOINTS.ADMIN_BOOKINGS}?page=${page}&size=${size}`;
+        return await this.request(endpoint, { method: 'GET' });
     }
 }
 

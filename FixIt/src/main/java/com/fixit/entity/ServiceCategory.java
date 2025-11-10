@@ -3,9 +3,9 @@ package com.fixit.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
+import lombok.EqualsAndHashCode; // <-- IMPORT
+import lombok.ToString; // <-- IMPORT
+import java.util.List;
 import java.util.Set;
 
 @Entity

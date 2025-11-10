@@ -1,6 +1,8 @@
 package com.fixit.service;
 
+import com.fixit.dto.ProviderDashboardDTO;
 import com.fixit.entity.*;
+import com.fixit.exception.ResourceNotFoundException;
 import com.fixit.repository.ReviewRepository;
 import com.fixit.repository.ServiceCategoryRepository;
 import com.fixit.repository.ServiceProviderRepository;
@@ -8,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -60,10 +63,6 @@ public class ServiceProviderService {
         }
         existing.setName(updatedProvider.getName());
 
-        if (updatedProvider.getServiceCategory() != null) {
-            existing.setServiceCategory(updatedProvider.getServiceCategory());
-        }
-
         existing.setLocation(updatedProvider.getLocation());
         existing.setContactNo(updatedProvider.getContactNo());
         return save(existing);
@@ -115,7 +114,6 @@ public class ServiceProviderService {
     }
 
     public ServiceProvider updateStatus(Long providerId, VerificationStatus status) {
-        // ... (existing logic)
         ServiceProvider provider = findById(providerId);
         if (provider != null) {
             provider.setStatus(status);
@@ -127,10 +125,20 @@ public class ServiceProviderService {
     public long getProviderCount() {
         return providerRepository.count();
     }
+
+    @Transactional(readOnly = true)
     public Optional<ServiceProvider> findByUser(User user) {
         if (user == null) {
             return Optional.empty();
         }
         return providerRepository.findByUserId(user.getId());
+    }
+    @Transactional(readOnly = true)
+    public ProviderDashboardDTO getDashboardDTO(User user) {
+        ServiceProvider provider = findByUser(user)
+                .orElseThrow(() -> new ResourceNotFoundException("Provider profile not found for user"));
+
+        // This now happens safely inside the transaction
+        return new ProviderDashboardDTO(provider);
     }
 }

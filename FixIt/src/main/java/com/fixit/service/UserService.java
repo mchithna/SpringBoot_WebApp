@@ -1,14 +1,19 @@
 package com.fixit.service;
 
+import com.fixit.dto.AdminUserViewDTO;
 import com.fixit.dto.UserProfileDTO;
+import com.fixit.entity.Role;
 import com.fixit.entity.User;
 import com.fixit.exception.ResourceNotFoundException;
 import com.fixit.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,7 +28,13 @@ public class UserService implements UserDetailsService {
     }
 
     public User save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // Check if the password is not null AND does not already look like a BCrypt hash
+        if (user.getPassword() != null && !user.getPassword().startsWith("$2a$")) {
+            // This must be a new password (from registration), so hash it.
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        // If the password *does* start with "$2a$", we assume it's an existing,
+        // hashed password from the DB and we DON'T touch it.
         return userRepository.save(user);
     }
 
@@ -35,6 +46,12 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    // NEW: Find all CUSTOMER users with pagination
+    @Transactional(readOnly = true)
+    public Page<AdminUserViewDTO> findAllCustomers(Pageable pageable) {
+        Page<User> userPage = userRepository.findAllByRole(Role.CUSTOMER, pageable);
+        return userPage.map(AdminUserViewDTO::new); // Convert Page<User> to Page<AdminUserViewDTO>
+    }
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = findByEmail(email);

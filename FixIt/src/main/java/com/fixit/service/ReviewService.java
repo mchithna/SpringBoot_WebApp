@@ -1,6 +1,7 @@
 package com.fixit.service;
 
 import com.fixit.dto.ReviewDTO;
+import com.fixit.dto.UserReviewDTO;
 import com.fixit.entity.Review;
 import com.fixit.entity.ServiceProvider;
 import com.fixit.entity.User;
@@ -11,6 +12,7 @@ import com.fixit.repository.ServiceProviderRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
@@ -58,6 +60,16 @@ public class ReviewService {
         }
         return reviewRepository.findByUserId(user.getId());
     }
+    // Get reviews as DTOs for the user dashboard
+    public List<UserReviewDTO> getReviewsForUser(User user) {
+        if (user == null || user.getId() == null) {
+            return List.of();
+        }
+        return reviewRepository.findByUserIdOrderByCreatedAtDesc(user.getId()).stream()
+                .map(UserReviewDTO::new)
+                .collect(Collectors.toList());
+    }
+
 
     public List<Review> findByUserId(Long userId) {
         return reviewRepository.findByUserId(userId);

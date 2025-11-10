@@ -17,11 +17,11 @@
     --accent-color: #f59e0b;
     --danger-color: #ef4444;
     --purple-color: #8b5cf6;
-    --text-dark: #1f2937;
+    --text-dark: #2667c5;
     --text-light: #6b7280;
     --bg-light: #f9fafb;
     --bg-white: #ffffff;
-    --border-color: #e5e7eb;
+    --border-color: #3a4c70;
     --sidebar-width: 280px;
     --topnav-height: 70px;
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -1167,6 +1167,7 @@ body {
     font-size: 20px;
     color: var(--text-dark);
 }
+
 
 .btn-edit {
     width: 100%;

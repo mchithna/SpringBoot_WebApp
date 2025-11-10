@@ -1,12 +1,15 @@
 package com.fixit.controller;
 
-import com.fixit.dto.RegisterRequest;
 import com.fixit.entity.Role;
 import com.fixit.entity.User;
-import com.fixit.security.JwtUtil;
+import com.fixit.dto.RegisterRequest;
+import com.fixit.entity.ServiceProvider;
 import com.fixit.service.ServiceProviderService;
+//
+import com.fixit.security.JwtUtil;
 import com.fixit.service.UserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +17,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap; // <-- IMPORT THIS
 import java.util.Map;
 
 @RestController
