@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - FixIT</title>
+    <link rel="stylesheet" href="user-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="logo">
+            <i class="fas fa-tools"></i>
+            <span>FixIT</span>
+        </div>
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a href="#dashboard" class="nav-item active" data-section="dashboard">
+            <i class="fas fa-home"></i>
+            <span data-i18n="dashboard">Dashboard</span>
+        </a>
+        <a href="#search" class="nav-item" data-section="search">
+            <i class="fas fa-search"></i>
+            <span data-i18n="search-services">Search Services</span>
+        </a>
+        <a href="#bookings" class="nav-item" data-section="bookings">
+            <i class="fas fa-calendar-alt"></i>
+            <span data-i18n="my-bookings">My Bookings</span>
+            <span class="badge">3</span>
+        </a>
+        <a href="#favorites" class="nav-item" data-section="favorites">
+            <i class="fas fa-heart"></i>
+            <span data-i18n="favorites">Favorites</span>
+        </a>
+        <a href="#reviews" class="nav-item" data-section="reviews">
+            <i class="fas fa-star"></i>
+            <span data-i18n="my-reviews">My Reviews</span>
+        </a>
+        <a href="#profile" class="nav-item" data-section="profile">
+            <i class="fas fa-user"></i>
+            <span data-i18n="profile">Profile</span>
+        </a>
+        <a href="#settings" class="nav-item" data-section="settings">
+            <i class="fas fa-cog"></i>
+            <span data-i18n="settings">Settings</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <a href="index.html" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span data-i18n="logout">Logout</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main-content">
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+        <button class="mobile-toggle" id="mobileToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="search-bar-top">
+            <i class="fas fa-search"></i>
+            <input type="text" data-i18n-placeholder="search-placeholder" placeholder="Search for services...">
+        </div>
+
+        <div class="nav-controls">
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <select class="language-select" id="languageSelect">
+                <option value="en">English</option>
+                <option value="si">සිංහල</option>
+            </select>
+
+            <button class="notifications-btn" id="notificationsBtn">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">5</span>
+            </button>
+
+            <div class="user-menu" id="userMenuBtn">
+                <img src="https://ui-avatars.com/api/?name=User" alt="User" class="user-avatar" id="nav-user-avatar">
+                <span class="user-name" data-i18n="user-name" id="nav-user-name">Loading...</span>
+                <i class="fas fa-chevron-down"></i>
+
+                <!-- The Dropdown Menu (hidden by default) -->
+                <div class="user-dropdown-menu" id="userDropdown">
+                    <a href="#profile" class="dropdown-item" data-section="profile">
+                        <i class="fas fa-user"></i>
+                        <span data-i18n="profile">Profile</span>
+                    </a>
+                    <a href="#settings" class="dropdown-item" data-section="settings">
+                        <i class="fas fa-cog"></i>
+                        <span data-i18n="settings">Settings</span>
+                    </a>
+                    <a href="index.html" class="dropdown-item logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span data-i18n="logout">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section class="content-section active" id="dashboard-section">
+        <div class="page-header">
+            <h1 data-i18n="welcome-back" id="welcome-header">Welcome Back!</h1>
+            <p data-i18n="dashboard-subtitle">Here's what's happening with your bookings</p>
+        </div>
+
+        <!-- Upcoming Bookings & Quick Actions -->
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 data-i18n="upcoming-bookings">Upcoming Bookings</h2>
+                    <a href="#bookings" class="view-all" data-i18n="view-all">View All</a>
+                </div>
+                <div class="bookings-list">
+                    <div class="booking-card">
+                        <div class="booking-header">
+                            <div class="service-icon-small blue">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <span class="booking-status confirmed" data-i18n="confirmed">Confirmed</span>
+                        </div>
+                        <h4 data-i18n="electrical-repair">Electrical Repair</h4>
+                        <div class="booking-provider">
+                            <img src="https://ui-avatars.com/api/?name=John+Smith&background=2563eb&color=fff" alt="Provider">
+                            <div>
+                                <strong>John Smith</strong>
+                                <div class="provider-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="booking-details">
+                            <div class="booking-detail">
+                                <i class="fas fa-calendar"></i>
+                                <span>Oct 30, 2025</span>
+                            </div>
+                            <div class="booking-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>2:00 PM</span>
+                            </div>
+                            <div class="booking-detail">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>$85</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary btn-block" data-i18n="view-details">View Details</button>
+                    </div>
+
+                    <div class="booking-card">
+                        <div class="booking-header">
+                            <div class="service-icon-small green">
+                                <i class="fas fa-wrench"></i>
+                            </div>
+                            <span class="booking-status pending" data-i18n="pending">Pending</span>
+                        </div>
+                        <h4 data-i18n="plumbing-service">Plumbing Service</h4>
+                        <div class="booking-provider">
+                            <img src="https://ui-avatars.com/api/?name=Mike+Johnson&background=10b981&color=fff" alt="Provider">
+                            <div>
+                                <strong>Mike Johnson</strong>
+                                <div class="provider-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>5.0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="booking-details">
+                            <div class="booking-detail">
+                                <i class="fas fa-calendar"></i>
+                                <span>Oct 31, 2025</span>
+                            </div>
+                            <div class="booking-detail">
+                                <i class="fas fa-clock"></i>
+                                <span>10:00 AM</span>
+                            </div>
+                            <div class="booking-detail">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>$120</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary btn-block" data-i18n="view-details">View Details</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2 data-i18n="quick-actions">Quick Actions</h2>
+                </div>
+                <div class="quick-actions">
+                    <button class="action-btn">
+                        <i class="fas fa-search"></i>
+                        <span data-i18n="find-service">Find a Service</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-calendar-plus"></i>
+                        <span data-i18n="book-service">Book a Service</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-history"></i>
+                        <span data-i18n="booking-history">Booking History</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-heart"></i>
+                        <span data-i18n="favorites">Favorite Service</span>
+                    </button>
+                </div>
+
+                <div class="promo-card">
+                    <div class="promo-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="promo-content">
+                        <h4 data-i18n="special-offer">Special Offer!</h4>
+                        <p data-i18n="promo-text">Get 20% off on your next booking</p>
+                        <button class="btn-promo" data-i18n="claim-offer">Claim Offer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommended Services -->
+        <div class="recommended-section">
+            <div class="card-header">
+                <h2 data-i18n="recommended-services">Recommended for You</h2>
+            </div>
+            <div class="services-slider">
+                <div class="service-card-small">
+                    <div class="service-image">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4 data-i18n="electrical-services">Electrical Services</h4>
+                    <p data-i18n="starting-from">Starting from <strong>$50</strong></p>
+                    <button class="btn-secondary btn-sm" data-i18n="book-now">Book Now</button>
+                </div>
+                <div class="service-card-small">
+                    <div class="service-image green">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h4 data-i18n="plumbing-services">Plumbing Services</h4>
+                    <p data-i18n="starting-from">Starting from <strong>$75</strong></p>
+                    <button class="btn-secondary btn-sm" data-i18n="book-now">Book Now</button>
+                </div>
+                <div class="service-card-small">
+                    <div class="service-image orange">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h4 data-i18n="ac-services">AC Services</h4>
+                    <p data-i18n="starting-from">Starting from <strong>$100</strong></p>
+                    <button class="btn-secondary btn-sm" data-i18n="book-now">Book Now</button>
+                </div>
+                <div class="service-card-small">
+                    <div class="service-image purple">
+                        <i class="fas fa-broom"></i>
+                    </div>
+                    <h4 data-i18n="cleaning-services">Cleaning Services</h4>
+                    <p data-i18n="starting-from">Starting from <strong>$40</strong></p>
+                    <button class="btn-secondary btn-sm" data-i18n="book-now">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Services Section -->
+    <section class="content-section" id="search-section">
+        <div class="page-header">
+            <h1 data-i18n="search-services">Search Services</h1>
+        </div>
+
+        <div class="search-container">
+            <div class="search-filters" id="search-filter-form">
+                <div class="filter-header">
+                    <h3 data-i18n="filters">Filters</h3>
+                    <button class="btn-clear-filters" id="filter-clear-btn">Clear All</button>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filter-category-select" data-i18n="service-category">Service Category</label>
+                    <select class="filter-select" id="filter-category-select">
+                        <option value="" data-i18n="all-categories">All Categories</option>
+                        <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filter-search-location">Location</label>
+                    <input type="text" id="filter-search-location" class="filter-input" placeholder="e.g., Colombo">
+                </div>
+
+                <div class="filter-group">
+                    <label data-i18n="price-range">Price Range</label>
+                    <div class="price-inputs">
+                        <input type="number" id="filter-price-min" placeholder="Min" class="price-input">
+                        <span>-</span>
+                        <input type="number" id="filter-price-max" placeholder="Max" class="price-input">
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label data-i18n="rating">Rating</label>
+                    <div class="rating-filter-options">
+                        <div class="rating-filter-item">
+                            <input type="radio" id="filter-rating-any" name="filter-rating" value="0" checked>
+                            <label for="filter-rating-any">Any Rating</label>
+                        </div>
+                        <div class="rating-filter-item">
+                            <input type="radio" id="filter-rating-4" name="filter-rating" value="4">
+                            <label for="filter-rating-4">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span data-i18n="and-up">& up</span>
+                            </label>
+                        </div>
+                        <div class="rating-filter-item">
+                            <input type="radio" id="filter-rating-3" name="filter-rating" value="3">
+                            <label for="filter-rating-3">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span data-i18n="and-up">& up</span>
+                            </label>
+                        </div>
+                        <div class="rating-filter-item">
+                            <input type="radio" id="filter-rating-2" name="filter-rating" value="2">
+                            <label for="filter-rating-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span data-i18n="and-up">& up</span>
+                            </label>
+                        </div>
+                        <div class="rating-filter-item">
+                            <input type="radio" id="filter-rating-1" name="filter-rating" value="1">
+                            <label for="filter-rating-1">
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span data-i18n="and-up">& up</span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button class="btn-primary btn-block" id="filter-apply-btn" data-i18n="apply-filters">Apply Filters</button>
+            </div>
+
+            <div class="search-results">
+                <div class="results-header">
+                    <h3 id="results-count-header">... <span data-i18n="services-found">services found</span></h3>
+                    <select class="sort-select">
+                        <option data-i18n="sort-by">Sort by</option>
+                        <option data-i18n="rating-high-low">Rating: High to Low</option>
+                        <option data-i18n="price-low-high">Price: Low to High</option>
+                        <option data-i18n="price-high-low">Price: High to Low</option>
+                    </select>
+                </div>
+
+                <div class="providers-list" id="providers-list-container">
+                    <p>Loading services...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Bookings Section -->
+    <section class="content-section" id="bookings-section">
+        <div class="page-header">
+            <h1 data-i18n="my-bookings">My Bookings</h1>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="all" data-i18n="all">All</button>
+            <button class="tab" data-tab="PENDING" data-i18n="pending">Pending</button>
+            <button class="tab" data-tab="CONFIRMED" data-i18n="upcoming">Upcoming</button>
+            <button class="tab" data-tab="COMPLETED" data-i18n="completed">Completed</button>
+            <button class="tab" data-tab="CANCELLED" data-i18n="cancelled">Cancelled</button>
+        </div>
+
+        <div class="bookings-grid" id="bookings-grid-container">
+            <p>Loading bookings...</p>
+        </div>
+    </section>
+
+    <!-- Favorites Section -->
+    <section class="content-section" id="favorites-section">
+        <div class="page-header">
+            <h1 data-i18n="favorite-providers">Favorite Providers</h1>
+            <p data-i18n="favorites-subtitle">Your saved service providers</p>
+        </div>
+
+        <div classs="service-grid-container" id="favorites-grid-container">
+            <!-- Favorite service cards here  -->
+            <p>Loading your favorite services...</p>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="content-section" id="reviews-section">
+        <div class="page-header">
+            <h1 data-i18n="my-reviews">My Reviews</h1>
+            <p data-i18n="reviews-subtitle">Reviews you've written</p>
+        </div>
+
+        <div class="reviews-list-user" id="reviews-list-container">
+            <p>Loading your reviews...</p>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section class="content-section" id="profile-section">
+        <div class="page-header">
+            <h1 data-i18n="my-profile">My Profile</h1>
+        </div>
+
+        <div class="profile-container">
+            <div class="profile-card">
+                <div class="profile-avatar-section">
+                    <img src="https://ui-avatars.com/api/?name=Sarah+Miller&background=2563eb&color=fff&size=150" alt="Profile" class="profile-avatar-large" id="profile-avatar-large">
+                    <button class="btn-change-photo" data-i18n="change-photo">Change Photo</button>
+                </div>
+
+                <form class="profile-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="full-name">Full Name</label>
+                            <input type="text" value="Sarah Miller" required id="profile-name">
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="email">Email</label>
+                            <input type="email" value="sarah.miller@email.com" required id="profile-email">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="phone">Phone</label>
+                            <input type="tel" value="+1 234 567 8901" required id="profile-phone">
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="location">Location</label>
+                            <input type="text" value="Colombo, Sri Lanka" required id="profile-location">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="address">Address</label>
+                        <input type="text" value="123 Main Street, Colombo 00100" required id="profile-address">
+                    </div>
+
+                    <button type="submit" class="btn-primary" data-i18n="save-changes">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Settings Section -->
+    <section class="content-section" id="settings-section">
+        <div class="page-header">
+            <h1 data-i18n="settings">Settings</h1>
+        </div>
+
+        <div class="settings-container">
+            <div class="settings-group">
+                <h2 data-i18n="notifications">Notifications</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4 data-i18n="email-notifications">Email Notifications</h4>
+                        <p data-i18n="email-notifications-desc">Receive booking updates via email</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4 data-i18n="sms-notifications">SMS Notifications</h4>
+                        <p data-i18n="sms-notifications-desc">Receive booking updates via SMS</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4 data-i18n="promotional-emails">Promotional Emails</h4>
+                        <p data-i18n="promotional-emails-desc">Receive offers and promotions</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h2 data-i18n="privacy">Privacy</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <h4 data-i18n="profile-visibility">Profile Visibility</h4>
+                        <p data-i18n="profile-visibility-desc">Show your profile to providers</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h2 data-i18n="account">Account</h2>
+                <button class="btn-secondary" data-i18n="change-password">Change Password</button>
+                <button class="btn-danger" data-i18n="delete-account">Delete Account</button>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Add the Booking Modal -->
+<div class="modal-overlay" id="booking-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="booking-modal-title">Book Service</h2>
+            <button class="modal-close" id="booking-modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="booking-form">
+                <!-- Hidden input to store providerId -->
+                <input type="hidden" id="booking-provider-id" value="">
+
+                <div class="form-group">
+                    <label>Service</label>
+                    <div class="booking-info-item" id="booking-modal-service-name">
+                        Loading...
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Provider</label>
+                    <div class="booking-info-item" id="booking-modal-provider-name">
+                        Loading...
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Price</label>
+                    <div class="booking-info-item" id="booking-modal-service-price">
+                        Loading...
+                    </div>
+                </div>
+
+                <!--  Date/Time Picker -->
+                <div class="form-group">
+                    <label for="booking-datetime">Select Date and Time</label>
+                    <input type="datetime-local" id="booking-datetime" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="booking-remarks">Remarks (Optional)</label>
+                    <textarea id="booking-remarks" rows="3" placeholder="e.g., My kitchen sink tap is dripping"></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="booking-modal-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn-primary" id="booking-modal-confirm-btn">Confirm Booking</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--  Booking Details Modal -->
+
+<div class="modal-overlay" id="booking-details-modal">
+    <div class="modal-content large">
+        <div class="modal-header">
+            <h2 id="booking-details-title" data-i18n="view-details">Booking Details</h2>
+            <button class="modal-close" id="details-modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="details-grid">
+                <!-- Left Column: Service & Provider -->
+                <div class="details-column">
+                    <h3>Service & Provider</h3>
+                    <div class="detail-item">
+                        <span class="detail-label">Service</span>
+                        <strong id="details-service-name">Loading...</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Description</span>
+                        <p id="details-service-description">Loading...</p>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Provider</span>
+                        <strong id="details-provider-name">Loading...</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Provider Contact</span>
+                        <strong id="details-provider-contact">Loading...</strong>
+                    </div>
+                </div>
+
+                <!-- Right Column: Booking Info -->
+                <div class="details-column">
+                    <h3>Booking Info</h3>
+                    <div class="detail-item">
+                        <span class="detail-label">Booking ID</span>
+                        <strong id="details-booking-id">Loading...</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Date & Time</span>
+                        <div>
+                            <strong id="details-booking-date">Loading...</strong>
+                            <span id="details-booking-time" class="detail-time">at Loading...</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Price</span>
+                        <strong id="details-booking-price">Loading...</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Status</span>
+                        <strong id="details-booking-status">Loading...</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Your Remarks</span>
+                        <p id="details-booking-remarks">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Review Modal -->
+<div class="modal-overlay" id="review-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="review-modal-title">Leave a Review</h2>
+            <button class="modal-close" id="review-modal-close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="review-form">
+                <input type="hidden" id="review-booking-id" value="">
+                <input type="hidden" id="review-provider-id" value="">
+
+                <p class="review-modal-intro">How was your service with <strong id="review-provider-name">Provider</strong> for <strong id="review-service-name">Service</strong>?</p>
+
+                <div class="form-group">
+                    <label>Your Rating</label>
+                    <div class="star-rating" id="review-star-rating">
+                        <i class="far fa-star" data-value="1"></i>
+                        <i class="far fa-star" data-value="2"></i>
+                        <i class="far fa-star" data-value="3"></i>
+                        <i class="far fa-star" data-value="4"></i>
+                        <i class="far fa-star" data-value="5"></i>
+                    </div>
+                    <input type="hidden" id="review-rating-value" value="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="review-comment">Your Review</label>
+                    <textarea id="review-comment" rows="5" placeholder="Tell us about your experience..." required></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="review-modal-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn-primary" id="review-modal-submit-btn">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- success/error messages -->
+<div class="toast-notification" id="toast-notification">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-message">Booking Requested!</span>
+</div>
+
+<script src="api-config.js"></script>
+<script src="user-translations.js"></script>
+<script src="user-dashboard.js"></script>
+</body>
+</html>
