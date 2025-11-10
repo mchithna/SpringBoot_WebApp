@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixIT - Your Trusted Home Service Partner</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-tools"></i>
+                <span>FixIT</span>
+            </div>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active" data-i18n="home">Home</a></li>
+                <li><a href="#services" class="nav-link" data-i18n="services">Services</a></li>
+                <li><a href="#how-it-works" class="nav-link" data-i18n="how-it-works">How It Works</a></li>
+                <li><a href="#testimonials" class="nav-link" data-i18n="testimonials">Testimonials</a></li>
+                <li><a href="#contact" class="nav-link" data-i18n="contact">Contact</a></li>
+                <li class="nav-controls-container">
+                    <div class="nav-controls">
+                        <!-- MOVED: Theme Toggle Button -->
+                        <button class="theme-toggle" id="themeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <!-- MOVED: Language Select -->
+                        <select class="language-select" id="languageSelect">
+                            <option value="en">EN</option>
+                            <option value="si">SI</option>
+                        </select>
+                        <!-- MOVED: Login/Sign Up Buttons -->
+                        <a href="login2.html" class="btn-login" data-i18n="login">Login</a>
+                        <a href="login2.html?form=register" class="btn-signup" data-i18n="signup">Sign Up</a>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+     
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background">
+            <div class="hero-shape shape-1"></div>
+            <div class="hero-shape shape-2"></div>
+            <div class="hero-shape shape-3"></div>
+        </div>
+        
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-line" data-i18n="hero-title-1">Quality Home Services</span>
+                    <span class="title-line" data-i18n="hero-title-2">At Your Fingertips</span>
+                </h1>
+                <p class="hero-subtitle" data-i18n="hero-subtitle">
+                    Book trusted electricians, plumbers, and cleaners with just a few clicks. 
+                    Fast, reliable, and rated by thousands of satisfied customers.
+                </p>
+                
+                <div class="hero-search">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" data-i18n-placeholder="search-placeholder" placeholder="What service do you need?">
+                    </div>
+                    <button class="btn-search">
+                        <span data-i18n="find-services">Find Services</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-users"></i>
+                        <div class="stat-content">
+                            <span class="stat-number" data-target="50000">0</span><span class="stat-plus">+</span>
+                            <span class="stat-label" data-i18n="happy-customers">Happy Customers</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-user-tie"></i>
+                        <div class="stat-content">
+                            <span class="stat-number" data-target="2500">0</span><span class="stat-plus">+</span>
+                            <span class="stat-label" data-i18n="verified-professionals">Verified Professionals</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-star"></i>
+                        <div class="stat-content">
+                            <span class="stat-number" data-target="4">0</span><span class="stat-decimal">.9</span>
+                            <span class="stat-label" data-i18n="average-rating">Average Rating</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <div class="floating-card card-1">
+                    <i class="fas fa-bolt"></i>
+                    <span data-i18n="electrician">Electrician</span>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-wrench"></i>
+                    <span data-i18n="plumber">Plumber</span>
+                </div>
+                <div class="floating-card card-3">
+                    <i class="fas fa-broom"></i>
+                    <span data-i18n="cleaner">Cleaner</span>
+                </div>
+                <div class="hero-illustration">
+                    <div class="illustration-circle"></div>
+                    <i class="fas fa-home illustration-icon"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <span data-i18n="scroll-explore">Scroll to explore</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label" data-i18n="our-services">Our Services</span>
+                <h2 class="section-title" data-i18n="services-title">Professional Services for Every Need</h2>
+                <p class="section-subtitle" data-i18n="services-subtitle">Choose from our wide range of trusted home services</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 data-i18n="electrical-services">Electrical Services</h3>
+                    <p data-i18n="electrical-desc">Expert electricians for repairs, installations, and emergency services available 24/7.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i><span data-i18n="wiring-rewiring">Wiring & Rewiring</span></li>
+                        <li><i class="fas fa-check"></i><span data-i18n="light-installations">Light Installations</span></li>
+                        <li><i class="fas fa-check"></i><span data-i18n="circuit-repairs">Circuit Repairs</span></li>
+                    </ul>
+                    <button class="btn-service">
+                        <span data-i18n="book-now">Book Now</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="service-card featured">
+                    <div class="popular-badge" data-i18n="most-popular">Most Popular</div>
+                    <div class="service-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h3 data-i18n="plumbing-services">Plumbing Services</h3>
+                    <p data-i18n="plumbing-desc">Certified plumbers to fix leaks, install fixtures, and handle all your plumbing needs.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i><span data-i18n="leak-detection">Leak Detection</span></li>
+                        <li><i class="fas fa-check"></i><span data-i18n="pipe-installations">Pipe Installations</span></li>
+                        <li><i class="fas fa-check"></i><span data-i18n="drain-cleaning">Drain Cleaning</span></li>
+                    </ul>
+                    <button class="btn-service">
+                        <span data-i18n="book-now">Book Now</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-broom"></i>
+                    </div>
+                    <h3 data-i18n="cleaning-services">Cleaning Services</h3>
+                    <p data-i18n="cleaning-desc">Professional cleaners for deep cleaning, regular maintenance, and special occasions.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i><span data-i18n="deep-cleaning">Deep Cleaning</span></li>
+                        <li><i class="fas fa-check"></i><span data-i18n="regular-maintenance">Regular Maintenance</span></li>
+                        <li><i class="fas fa-check"></i><span data-i18n="move-cleaning">Move-in/out Cleaning</span></li>
+                    </ul>
+                    <button class="btn-service">
+                        <span data-i18n="book-now">Book Now</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-paint-roller"></i>
+                    </div>
+                    <h3 data-i18n="painting-services">Painting Services</h3>
+                    <p data-i18n="painting-desc">Skilled painters for interior and exterior painting with premium quality materials.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i><span data-i18n="interior-painting">Interior Painting</span></li>
+                        <li><i class="fas fa-check"></i><span data-i18n="exterior-painting">Exterior Painting</span></li>
+                        <li><i class="fas fa-check"></i><span data-i18n="wall-texturing">Wall Texturing</span></li>
+                    </ul>
+                    <button class="btn-service">
+                        <span data-i18n="book-now">Book Now</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-hammer"></i>
+                    </div>
+                    <h3 data-i18n="carpentry-services">Carpentry Services</h3>
+                    <p data-i18n="carpentry-desc">Expert carpenters for furniture assembly, repairs, and custom woodwork projects.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i><span data-i18n="furniture-assembly">Furniture Assembly</span></li>
+                        <li><i class="fas fa-check"></i><span data-i18n="door-window-repairs">Door & Window Repairs</span></li>
+                        <li><i class="fas fa-check"></i><span data-i18n="custom-woodwork">Custom Woodwork</span></li>
+                    </ul>
+                    <button class="btn-service">
+                        <span data-i18n="book-now">Book Now</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h3 data-i18n="ac-services">AC Repair & Installation</h3>
+                    <p data-i18n="ac-desc">Certified technicians for AC repair, maintenance, and new installations.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i><span data-i18n="ac-repair">AC Repair</span></li>
+                        <li><i class="fas fa-check"></i><span data-i18n="ac-installation">Installation</span></li>
+                        <li><i class="fas fa-check"></i><span data-i18n="ac-maintenance">Maintenance</span></li>
+                    </ul>
+                    <button class="btn-service">
+                        <span data-i18n="book-now">Book Now</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label" data-i18n="simple-process">Simple Process</span>
+                <h2 class="section-title" data-i18n="how-it-works-title">How FixIT Works</h2>
+                <p class="section-subtitle" data-i18n="how-it-works-subtitle">Get your home services done in three easy steps</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 data-i18n="step1-title">Choose Your Service</h3>
+                    <p data-i18n="step1-desc">Browse our wide range of home services and select the one you need.</p>
+                </div>
+                
+                <div class="step-connector">
+                    <div class="connector-line"></div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 data-i18n="step2-title">Book & Schedule</h3>
+                    <p data-i18n="step2-desc">Select your preferred date and time, and book a verified professional instantly.</p>
+                </div>
+                
+                <div class="step-connector">
+                    <div class="connector-line"></div>
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 data-i18n="step3-title">Get It Done</h3>
+                    <p data-i18n="step3-desc">Sit back and relax while our professionals complete the job perfectly.</p>
+                </div>
+            </div>
+            
+            <div class="cta-box">
+                <h3 data-i18n="cta-title">Ready to get started?</h3>
+                <p data-i18n="cta-subtitle">Join thousands of satisfied customers who trust FixIT</p>
+                <button class="btn-cta">
+                    <span data-i18n="cta-button">Book Your First Service</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-content">
+                <div class="features-text">
+                    <span class="section-label" data-i18n="why-choose-us">Why Choose Us</span>
+                    <h2 data-i18n="advantage-title">The FixIT Advantage</h2>
+                    <p class="features-intro" data-i18n="features-intro">We make home services simple, reliable, and hassle-free</p>
+                    
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon-small">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4 data-i18n="feature1-title">Verified Professionals</h4>
+                                <p data-i18n="feature1-desc">All our service providers are thoroughly vetted, background-checked, and highly rated.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon-small">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4 data-i18n="feature2-title">Flexible Scheduling</h4>
+                                <p data-i18n="feature2-desc">Book services at your convenience, with same-day and emergency options available.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon-small">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4 data-i18n="feature3-title">Transparent Pricing</h4>
+                                <p data-i18n="feature3-desc">No hidden charges. Get upfront quotes and pay only for the services you need.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon-small">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h4 data-i18n="feature4-title">24/7 Support</h4>
+                                <p data-i18n="feature4-desc">Our customer support team is always ready to help you with any queries or concerns.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="features-visual">
+                    <div class="feature-box box-1">
+                        <i class="fas fa-star"></i>
+                        <span data-i18n="rating-badge">4.9 Rating</span>
+                    </div>
+                    <div class="feature-box box-2">
+                        <i class="fas fa-user-shield"></i>
+                        <span data-i18n="verified-badge">100% Verified</span>
+                    </div>
+                    <div class="feature-box box-3">
+                        <i class="fas fa-award"></i>
+                        <span data-i18n="best-service-badge">Best Service</span>
+                    </div>
+                    <div class="features-center">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label" data-i18n="testimonials-label">Testimonials</span>
+                <h2 class="section-title" data-i18n="testimonials-title">What Our Customers Say</h2>
+                <p class="section-subtitle" data-i18n="testimonials-subtitle">Real experiences from real people</p>
+            </div>
+            
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="testimonial-text" data-i18n="testimonial1">
+                        "FixIT made booking a plumber so easy! The professional arrived on time, fixed my leak quickly, 
+                        and the pricing was transparent. Highly recommended!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4 data-i18n="customer1-name">Sarah Johnson</h4>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="testimonial-text" data-i18n="testimonial2">
+                        "I've used FixIT multiple times for electrical work and cleaning services. Every time, 
+                        the professionals are skilled, courteous, and efficient. Great platform!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4 data-i18n="customer2-name">Michael Chen</h4>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <p class="testimonial-text" data-i18n="testimonial3">
+                        "Best home service platform I've used! The booking process is simple, and I can track 
+                        my service provider in real-time. Customer support is excellent too."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4 data-i18n="customer3-name">Emily Rodriguez</h4>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slider-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section" id="map-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label" data-i18n="our-location">Our Location</span>
+                <h2 class="section-title" data-i18n="find-us">Find Us Here</h2>
+                <p class="section-subtitle" data-i18n="visit-us">Visit our office or service locations</p>
+            </div>
+            
+            <div class="map-container">
+                <div id="google-map"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2 data-i18n="get-in-touch">Get in Touch</h2>
+                    <p data-i18n="questions-help">Have questions? We're here to help!</p>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="method-content">
+                                <h4 data-i18n="call-us">Call Us</h4>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-content">
+                                <h4 data-i18n="email-us">Email Us</h4>
+                                <p>support@fixit.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="method-content">
+                                <h4 data-i18n="visit-office">Visit Us</h4>
+                                <p data-i18n="office-address">123 Service Street, City, State 12345</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" data-i18n-placeholder="your-name" placeholder="Your Name" required>
+                            <i class="fas fa-user"></i>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="email" data-i18n-placeholder="your-email" placeholder="Your Email" required>
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="tel" data-i18n-placeholder="phone-number" placeholder="Phone Number" required>
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea data-i18n-placeholder="your-message" placeholder="Your Message" rows="4" required></textarea>
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">
+                            <span data-i18n="send-message">Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-tools"></i>
+                        <span>FixIT</span>
+                    </div>
+                    <p data-i18n="footer-desc">Your trusted partner for all home services. Professional, reliable, and affordable.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 data-i18n="quick-links">Quick Links</h4>
+                    <ul>
+                        <li><a href="#home" data-i18n="home">Home</a></li>
+                        <li><a href="#services" data-i18n="services">Services</a></li>
+                        <li><a href="#how-it-works" data-i18n="how-it-works">How It Works</a></li>
+                        <li><a href="#testimonials" data-i18n="testimonials">Testimonials</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 data-i18n="services">Services</h4>
+                    <ul>
+                        <li><a href="#" data-i18n="electrical">Electrical</a></li>
+                        <li><a href="#" data-i18n="plumbing">Plumbing</a></li>
+                        <li><a href="#" data-i18n="cleaning">Cleaning</a></li>
+                        <li><a href="#" data-i18n="painting">Painting</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 data-i18n="legal">Legal</h4>
+                    <ul>
+                        <li><a href="#" data-i18n="privacy-policy">Privacy Policy</a></li>
+                        <li><a href="#" data-i18n="terms-service">Terms of Service</a></li>
+                        <li><a href="#" data-i18n="cookie-policy">Cookie Policy</a></li>
+                        <li><a href="#" data-i18n="refund-policy">Refund Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p data-i18n="copyright">&copy; 2025 FixIT. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="home-translations.js"></script>
+    <script src="home.js"></script>
+</body>
+</html>

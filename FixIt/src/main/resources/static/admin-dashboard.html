@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - FixIT</title>
+    <link rel="stylesheet" href="admin-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-tools"></i>
+                <span>FixIT Admin</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                <i class="fas fa-home"></i>
+                <span data-i18n="dashboard">Dashboard</span>
+            </a>
+            <a href="#users" class="nav-item" data-section="users">
+                <i class="fas fa-users"></i>
+                <span data-i18n="users">Users</span>
+                <span class="badge" id="nav-badge-users">...</span>
+            </a>
+            <a href="#providers" class="nav-item" data-section="providers">
+                <i class="fas fa-user-tie"></i>
+                <span data-i18n="service-providers">Service Providers</span>
+                <span class="badge" id="nav-badge-providers">...</span>
+            </a>
+            <a href="#bookings" class="nav-item" data-section="bookings">
+                <i class="fas fa-calendar-alt"></i>
+                <span data-i18n="bookings">Bookings</span>
+                <span class="badge badge-warning" id="nav-badge-bookings">...</span>
+            </a>
+            <a href="#services" class="nav-item" data-section="services">
+                <i class="fas fa-wrench"></i>
+                <span data-i18n="service-categories">Service Categories</span>
+            </a>
+            <a href="#reviews" class="nav-item" data-section="reviews">
+                <i class="fas fa-star"></i>
+                <span data-i18n="reviews">Reviews</span>
+            </a>
+            <a href="#reports" class="nav-item" data-section="reports">
+                <i class="fas fa-file-alt"></i>
+                <span data-i18n="reports">Reports</span>
+            </a>
+            <a href="#settings" class="nav-item" data-section="settings">
+                <i class="fas fa-cog"></i>
+                <span data-i18n="settings">Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="index.html" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span data-i18n="logout">Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Navigation Bar -->
+        <header class="top-nav">
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" data-i18n-placeholder="search-placeholder" placeholder="Search users, bookings, providers...">
+            </div>
+
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <select class="language-select" id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="si">සිංහල</option>
+                </select>
+
+                <button class="notifications-btn" id="notificationsBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">8</span>
+                </button>
+
+                <div class="user-menu">
+                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=2563eb&color=fff" alt="Admin" class="user-avatar">
+                    <span class="user-name" data-i18n="admin-name">Admin User</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section class="content-section active" id="dashboard-section">
+            <div class="page-header">
+                <div>
+                    <h1 data-i18n="welcome-admin">Welcome to Admin Dashboard</h1>
+                    <p data-i18n="dashboard-subtitle">Monitor and manage your platform</p>
+                </div>
+                <div class="date-display">
+                    <i class="fas fa-calendar"></i>
+                    <span id="currentDate"></span>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 data-i18n="total-users">Total Users</h3>
+                        <p class="stat-number" id="stats-total-users">...</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 data-i18n="active-providers">Active Providers</h3>
+                        <p class="stat-number" id="stats-active-providers">...</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 data-i18n="total-bookings">Total Bookings</h3>
+                        <p class="stat-number" id="stats-total-bookings">...</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 data-i18n="total-services">Total Services</h3>
+                        <p class="stat-number" id="stats-total-services">...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card chart-card">
+                    <div class="card-header">
+                        <h2 data-i18n="booking-trends">Booking Trends</h2>
+                    </div>
+                    <div class="chart-placeholder">
+                        <canvas id="bookingChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h2 data-i18n="service-overview">Services Overview</h2>
+                    </div>
+                    <div class="revenue-stats" id="service-overview-list">
+                        <div class="revenue-item">
+                            <div class="revenue-label">
+                                <span class="revenue-dot blue"></span>
+                                <span>Loading...</span>
+                            </div>
+                            <strong>...</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="dashboard-grid-full">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h2 data-i18n="recent-activity">Recent Activity</h2>
+                        <a href="#" class="view-all" data-i18n="view-all">View All</a>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon blue">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>Sarah Johnson</strong> <span data-i18n="registered">registered as a new user</span></p>
+                                <span class="activity-time">5 minutes ago</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon green">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>Michael Chen</strong> <span data-i18n="completed-booking">completed a booking</span></p>
+                                <span class="activity-time">15 minutes ago</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon orange">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>Emily Davis</strong> <span data-i18n="left-review">left a 5-star review</span></p>
+                                <span class="activity-time">1 hour ago</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon purple">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p><strong>James Wilson</strong> <span data-i18n="registered-provider">registered as a service provider</span></p>
+                                <span class="activity-time">2 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Users Section -->
+        <section class="content-section" id="users-section">
+            <div class="page-header">
+                <h1 data-i18n="user-management">User Management</h1>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        <i class="fas fa-filter"></i>
+                        <span data-i18n="filter">Filter</span>
+                    </button>
+                    <button class="btn-secondary">
+                        <i class="fas fa-download"></i>
+                        <span data-i18n="export">Export</span>
+                    </button>
+                    <button class="btn-primary">
+                        <i class="fas fa-user-plus"></i>
+                        <span data-i18n="add-user">Add User</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" data-tab="all" data-i18n="all-users">All Users</button>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th data-i18n="user">User</th>
+                            <th data-i18n="email">Email</th>
+                            <th data-i18n="phone">Phone</th>
+                            <th>Address</th>
+                            <th data-i18n="bookings">Bookings</th>
+                            <th data-i18n="actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                    <!-- User rows here -->
+                    <tr>
+                        <td colspan="7" style="text-align: center;">Loading users...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination Controls -->
+
+            <div class="pagination-controls" id="users-pagination">
+                <button class="btn-secondary" id="users-prev-btn" disabled>&laquo; Previous</button>
+                <span id="users-page-info">Page 1 of 1</span>
+                <button class="btn-secondary" id="users-next-btn" disabled>Next &raquo;</button>
+            </div>
+        </section>
+
+        <!-- Service Providers Section -->
+        <section class="content-section" id="providers-section">
+            <div class="page-header">
+                <h1 data-i18n="provider-management">Service Provider Management</h1>
+                <div class="header-actions">
+                    <button class="btn-primary">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" data-tab="all" data-i18n="all-providers">All Providers</button>
+                <button class="tab" data-tab="PENDING_APPROVAL" data-i18n="pending-approval">Pending Approval</button>
+                <button class="tab" data-tab="VERIFIED" data-i18n="verified">Verified</button>
+                <button class="tab" data-tab="SUSPENDED" data-i18n="suspended">Suspended</button>
+            </div>
+
+            <div class="providers-grid" id="providers-grid-container">
+                <!-- Provider cards here -->
+                <p>Loading providers...</p>
+            </div>
+        </section>
+
+        <!-- Bookings Section -->
+        <section class="content-section" id="bookings-section">
+            <div class="page-header">
+                <h1 data-i18n="booking-management">Booking Management</h1>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        <i class="fas fa-filter"></i>
+                        <span data-i18n="filter">Filter</span>
+                    </button>
+                    <button class="btn-secondary">
+                        <i class="fas fa-download"></i>
+                        <span data-i18n="export">Export</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- TABS REMOVED PER REQUEST -->
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th data-i18n="booking-id">Booking ID</th>
+                        <th data-i18n="customer">Customer</th>
+                        <th data-i18n="provider">Provider</th>
+                        <th data-i18n="service">Service</th>
+                        <th data-i18n="date">Date</th>
+                        <th data-i18n="amount">Amount</th>
+                        <th data-i18n="status">Status</th>
+                        <th data-i18n="actions">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="bookings-table-body">
+                    <!-- Rows will be populated by admin-dashboard.js -->
+                    <tr>
+                        <td colspan="8" style="text-align: center;">Loading bookings...</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination Controls for Bookings -->
+            <div class="pagination-controls" id="bookings-pagination">
+                <button class="btn-secondary" id="bookings-prev-btn" disabled>&laquo; Previous</button>
+                <span id="bookings-page-info">Page 1 of 1</span>
+                <button class="btn-secondary" id="bookings-next-btn" disabled>Next &raquo;</button>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="content-section" id="services-section">
+            <div class="page-header">
+                <!-- UPDATED: Title changed -->
+                <h1 data-i18n="service-category-management">Service Category Management</h1>
+
+            </div>
+
+            <!-- UPDATED: Grid ID and content cleared -->
+            <div class="services-grid" id="service-categories-grid">
+                <!-- Service Category cards will be populated by admin-dashboard.js -->
+                <p data-i18n="loading-categories">Loading categories...</p>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section class="content-section" id="reviews-section">
+            <div class="page-header">
+                <h1 data-i18n="review-management">Review Management</h1>
+                <div class="header-actions">
+                    <button class="btn-secondary">
+                        <i class="fas fa-filter"></i>
+                        <span data-i18n="filter">Filter</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" data-tab="all" data-i18n="all-reviews">All Reviews</button>
+                <button class="tab" data-tab="pending" data-i18n="pending-moderation">Pending Moderation</button>
+                <button class="tab" data-tab="flagged" data-i18n="flagged">Flagged</button>
+            </div>
+
+            <div class="reviews-list-admin">
+                <div class="review-card-admin">
+                    <div class="review-header-admin">
+                        <div class="review-user">
+                            <img src="https://ui-avatars.com/api/?name=Sarah+Miller&background=3b82f6&color=fff" alt="User">
+                            <div>
+                                <h4>Sarah Miller</h4>
+                                <p class="review-meta">Reviewed <strong>John Smith</strong> • 2 days ago</p>
+                            </div>
+                        </div>
+                        <div class="review-rating-admin">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="review-text">Excellent service! Very professional and completed the work on time. Highly recommend!</p>
+                    <div class="review-actions-admin">
+                        <button class="btn-approve" data-i18n="approve">Approve</button>
+                        <button class="btn-reject" data-i18n="reject">Reject</button>
+                        <button class="btn-secondary btn-sm" data-i18n="view-details">View Details</button>
+                    </div>
+                </div>
+
+                <div class="review-card-admin flagged">
+                    <div class="flag-badge">
+                        <i class="fas fa-flag"></i>
+                        <span data-i18n="flagged">Flagged</span>
+                    </div>
+                    <div class="review-header-admin">
+                        <div class="review-user">
+                            <img src="https://ui-avatars.com/api/?name=John+Doe&background=ef4444&color=fff" alt="User">
+                            <div>
+                                <h4>John Doe</h4>
+                                <p class="review-meta">Reviewed <strong>Mike Johnson</strong> • 1 day ago</p>
+                            </div>
+                        </div>
+                        <div class="review-rating-admin">
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="review-text">This review contains inappropriate content that has been flagged by the system.</p>
+                    <div class="review-actions-admin">
+                        <button class="btn-approve" data-i18n="approve">Approve</button>
+                        <button class="btn-reject" data-i18n="reject">Reject</button>
+                        <button class="btn-secondary btn-sm" data-i18n="view-details">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section class="content-section" id="reports-section">
+            <div class="page-header">
+                <h1 data-i18n="system-reports">System Reports</h1>
+                <button class="btn-primary">
+                    <i class="fas fa-file-export"></i>
+                    <span data-i18n="generate-report">Generate Report</span>
+                </button>
+            </div>
+
+            <div class="reports-grid">
+                <div class="report-card">
+                    <div class="report-icon blue">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 data-i18n="user-report">User Report</h3>
+                    <p data-i18n="user-report-desc">Comprehensive user statistics and analytics</p>
+                    <button class="btn-secondary btn-sm" data-i18n="generate">Generate</button>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-icon green">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <h3 data-i18n="booking-report">Booking Report</h3>
+                    <p data-i18n="booking-report-desc">Detailed booking trends and patterns</p>
+                    <button class="btn-secondary btn-sm" data-i18n="generate">Generate</button>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-icon purple">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3 data-i18n="financial-report">Financial Report</h3>
+                    <p data-i18n="financial-report-desc">Revenue, commissions, and payouts</p>
+                    <button class="btn-secondary btn-sm" data-i18n="generate">Generate</button>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-icon orange">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 data-i18n="performance-report">Performance Report</h3>
+                    <p data-i18n="performance-report-desc">Provider ratings and service quality</p>
+                    <button class="btn-secondary btn-sm" data-i18n="generate">Generate</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section class="content-section" id="settings-section">
+            <div class="page-header">
+                <h1 data-i18n="system-settings">System Settings</h1>
+            </div>
+
+            <div class="settings-container">
+                <div class="settings-group">
+                    <h2 data-i18n="general-settings">General Settings</h2>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4 data-i18n="platform-name">Platform Name</h4>
+                            <p data-i18n="platform-name-desc">The name of your platform</p>
+                        </div>
+                        <input type="text" value="FixIT" class="setting-input">
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4 data-i18n="platform-email">Platform Email</h4>
+                            <p data-i18n="platform-email-desc">Main contact email address</p>
+                        </div>
+                        <input type="email" value="admin@fixit.com" class="setting-input">
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4 data-i18n="maintenance-mode">Maintenance Mode</h4>
+                            <p data-i18n="maintenance-mode-desc">Enable to put the platform under maintenance</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h2 data-i18n="commission-settings">Commission Settings</h2>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4 data-i18n="commission-rate">Commission Rate</h4>
+                            <p data-i18n="commission-rate-desc">Platform commission percentage</p>
+                        </div>
+                        <div class="input-with-unit">
+                            <input type="number" value="15" class="setting-input" min="0" max="100">
+                            <span>%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h2 data-i18n="notification-settings">Notification Settings</h2>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4 data-i18n="email-notifications-admin">Email Notifications</h4>
+                            <p data-i18n="email-notifications-admin-desc">Send email notifications to admins</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <h4 data-i18n="user-notifications">User Notifications</h4>
+                            <p data-i18n="user-notifications-desc">Allow users to receive notifications</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn-primary" data-i18n="save-settings">Save Settings</button>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-overlay" id="booking-details-modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="booking-details-title" data-i18n="view-details">Booking Details</h2>
+                <button class="modal-close" id="details-modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="details-grid">
+                    <!-- Left Column: Service & Provider -->
+                    <div class="details-column">
+                        <h3>Service & Provider</h3>
+                        <div class="detail-item">
+                            <span class="detail-label">Service</span>
+                            <strong id="details-service-name">Loading...</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Description</span>
+                            <p id="details-service-description">Loading...</p>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Provider</span>
+                            <strong id="details-provider-name">Loading...</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Provider Contact</span>
+                            <strong id="details-provider-contact">Loading...</strong>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Booking Info -->
+                    <div class="details-column">
+                        <h3>Booking Info</h3>
+                        <div class="detail-item">
+                            <span class="detail-label">Booking ID</span>
+                            <strong id="details-booking-id">Loading...</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Date & Time</span>
+                            <div>
+                                <strong id="details-booking-date">Loading...</strong>
+                                <span id="details-booking-time" class="detail-time">at Loading...</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Price</span>
+                            <strong id="details-booking-price">Loading...</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Status</span>
+                            <strong id="details-booking-status">Loading...</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Your Remarks</span>
+                            <p id="details-booking-remarks">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="api-config.js"></script>
+
+    <script src="admin-translations.js"></script>
+    <script src="admin-dashboard.js"></script>
+</body>
+</html>
